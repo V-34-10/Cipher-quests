@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_settings"
+    tools:context=".ui.settings.SettingsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button_reset_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_sounds"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/coda_extrabold"
+            android:text="@string/text_sounds"
+            android:textAlignment="center"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/sp25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarMusic" />
+
+        <ImageView
+            android:id="@+id/ico_sounds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/icon_sounds"
+            android:contentDescription="@string/button_accept_privacy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_sounds" />
+
+        <SeekBar
+            android:id="@+id/seekBarSounds"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_music_bar"
+            android:progressDrawable="@drawable/line_bar"
+            android:thumb="@drawable/bar_thumb"
+            app:layout_constraintBottom_toBottomOf="@+id/ico_sounds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ico_sounds"
+            app:layout_constraintTop_toTopOf="@+id/ico_sounds" />
+
+        <TextView
+            android:id="@+id/text_Music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/coda_extrabold"
+            android:text="@string/text_Music"
+            android:textAlignment="center"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/sp25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ico_Music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/icon_music"
+            android:contentDescription="@string/button_accept_privacy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_Music" />
+
+        <SeekBar
+            android:id="@+id/seekBarMusic"
+            android:layout_width="275dp"
+            android:layout_height="40dp"
+            android:background="@drawable/background_music_bar"
+            android:progressDrawable="@drawable/line_bar"
+            android:thumb="@drawable/bar_thumb"
+            app:layout_constraintBottom_toBottomOf="@+id/ico_Music"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ico_Music"
+            app:layout_constraintTop_toTopOf="@+id/ico_Music" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/button_reset_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_reset_score"
+        android:clickable="true"
+        android:contentDescription="@string/button_reset_score"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Cipher Quests</string>
     <string name="loading_text">LOADING…</string>
+    <string name="text_read_privacy"><u>Read</u></string>
+    <string name="button_accept_privacy">button_accept_privacy</string>
+    <string name="button_claim_daily">btn claim daily</string>
+    <string name="basic_day_1">btn_first_day</string>
+    <string name="basic_day_2">btn_second_day</string>
+    <string name="basic_day_3">btn_three_day</string>
+    <string name="settings_btn">btn_settings</string>
+    <string name="text_privacy"><u>Privacy</u></string>
+    <string name="first_game_btn">button_quiz</string>
+    <string name="second_game_btn">button_puzzles</string>
+    <string name="three_game_btn">button_find_pair</string>
+    <string name="button_reset_score">button_reset_score</string>
+    <string name="text_sounds">Sounds</string>
+    <string name="text_Music">Music</string>
 </resources>
