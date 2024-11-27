@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cipher Quests</string>
+    <string name="loading_text">LOADING…</string>
 </resources>
