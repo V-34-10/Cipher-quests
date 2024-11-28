@@ -32,8 +32,10 @@
         <include
             android:id="@+id/timer_counter"
             layout="@layout/timer_puzzle_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_back"
             app:layout_constraintStart_toStartOf="@+id/btn_pause"
             app:layout_constraintTop_toTopOf="parent" />
