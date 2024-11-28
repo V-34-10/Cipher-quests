@@ -1,11 +1,13 @@
 package com.ciphero.questa.ui.menu
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityMenuBinding
 import com.ciphero.questa.ui.games.SceneBasicActivity
@@ -16,47 +18,39 @@ import kotlin.system.exitProcess
 
 class MenuActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMenuBinding.inflate(layoutInflater) }
+    private val preferences by lazy { getSharedPreferences("CipherQuestsPref", MODE_PRIVATE) }
+    private val scaleAnimation by lazy { AnimationUtils.loadAnimation(this, R.anim.anim_scale) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
-        controlButtons()
+        setupClickListeners()
     }
 
-    private fun controlButtons() {
-        val animator = AnimationUtils.loadAnimation(this@MenuActivity, R.anim.anim_scale)
-        binding.textPrivacy.setOnClickListener {
-            it.startAnimation(animator)
-            startActivity(Intent(this@MenuActivity, PrivacyActivity::class.java))
-            finish()
-        }
-        binding.apply {
-            clickButton(btnSettings, SettingsActivity::class.java)
-            clickGameButton(btnFirstGame, R.string.first_game_btn)
-            clickGameButton(btnSecondGame, R.string.second_game_btn)
-            clickGameButton(btnThreeGame, R.string.three_game_btn)
-        }
+    private fun setupClickListeners() = with(binding) {
+        textPrivacy.setOnClickListener { navigateToActivity<PrivacyActivity>(it) }
+        btnSettings.setOnClickListener { navigateToActivity<SettingsActivity>(it) }
+        btnFirstGame.setOnClickListener { startGame(R.string.first_game_btn, it) }
+        btnSecondGame.setOnClickListener { startGame(R.string.second_game_btn, it) }
+        btnThreeGame.setOnClickListener { startGame(R.string.three_game_btn, it) }
     }
 
-    private fun clickGameButton(button: View, gameName: Int) {
-        val animator = AnimationUtils.loadAnimation(this@MenuActivity, R.anim.anim_scale)
-        button.setOnClickListener {
-            it.startAnimation(animator)
-            this.getSharedPreferences("CipherQuestsPref", MODE_PRIVATE).edit()
-                .putString("nameGame", this.getString(gameName)).apply()
-            startActivity(Intent(this@MenuActivity, SceneBasicActivity::class.java))
-            finish()
-        }
+    private fun <T : Activity> navigateToActivity(view: View, activityClass: Class<T>) {
+        view.startAnimation(scaleAnimation)
+        startActivity(Intent(this, activityClass))
+        finish()
     }
 
-    private fun <T : AppCompatActivity> clickButton(button: View, activityClass: Class<T>) {
-        val animator = AnimationUtils.loadAnimation(this@MenuActivity, R.anim.anim_scale)
-        button.setOnClickListener {
-            it.startAnimation(animator)
-            startActivity(Intent(this@MenuActivity, activityClass))
-            finish()
-        }
+    private inline fun <reified T : Activity> navigateToActivity(view: View) {
+        navigateToActivity(view, T::class.java)
+    }
+
+    private fun startGame(gameNameResId: Int, view: View) {
+        view.startAnimation(scaleAnimation)
+        preferences.edit { putString("nameGame", getString(gameNameResId)) }
+        startActivity(Intent(this, SceneBasicActivity::class.java))
+        finish()
     }
 
     @Deprecated(
