@@ -17,7 +17,6 @@ class SettingsActivity : AppCompatActivity() {
     private val preferences by lazy { getSharedPreferences("CipherQuestsPref", MODE_PRIVATE) }
     private val scaleAnimation by lazy { AnimationUtils.loadAnimation(this, R.anim.anim_scale) }
     private val managerAudioService by lazy { getSystemService(Context.AUDIO_SERVICE) as AudioManager }
-    private var defaultVolumeMusic: Int = 50
     private lateinit var musicSet: MusicControllerPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
