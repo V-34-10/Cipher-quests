@@ -61,7 +61,7 @@
             android:id="@+id/btn_first_answer"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/background_basic_answer"
             android:clickable="true"
             android:focusable="true"
@@ -79,7 +79,7 @@
             android:id="@+id/btn_second_answer"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/background_basic_answer"
             android:clickable="true"
             android:focusable="true"
@@ -97,7 +97,7 @@
             android:id="@+id/btn_three_answer"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/background_basic_answer"
             android:clickable="true"
             android:focusable="true"
@@ -110,6 +110,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_second_answer" />
+
+        <ImageView
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_next_dialog"
+            android:clickable="true"
+            android:contentDescription="@string/settings_btn"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_three_answer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
