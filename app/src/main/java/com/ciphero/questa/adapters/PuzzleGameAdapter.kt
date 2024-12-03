@@ -26,7 +26,7 @@ class PuzzleGameAdapter(
     private val cardList: MutableList<Puzzle>,
     context: Context,
     private var timerAnimation: TimeBarAnimator,
-    binding: FragmentPuzzleGameBinding,
+    private var binding: FragmentPuzzleGameBinding,
 ) : RecyclerView.Adapter<PuzzleGameAdapter.ViewHolder>() {
 
     private var emptyPosition: Int = cardList.size - 1
@@ -36,7 +36,7 @@ class PuzzleGameAdapter(
     private var timerStarted = false
 
     init {
-        timerAnimation = TimeBarAnimator(binding, null)
+        timerAnimation = TimeBarAnimator(null)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -65,7 +65,7 @@ class PuzzleGameAdapter(
                     emptyPosition = adapterPosition
                 }
                 if (!timerStarted) {
-                    timerAnimation.startTimer()
+                    timerAnimation.startTimer(binding)
                     timerStarted = true
                 }
             }

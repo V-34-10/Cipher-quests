@@ -39,7 +39,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        timer = TimeBarAnimator(binding, null)
+        timer = TimeBarAnimator( null)
         gameGovern.startRound()
 
         binding.btnPause.setOnClickListener {
@@ -57,7 +57,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        timer.stopTimer()
+        timer.stopTimer(binding)
     }
 
     override fun onMovePuzzle(move: Int) {
