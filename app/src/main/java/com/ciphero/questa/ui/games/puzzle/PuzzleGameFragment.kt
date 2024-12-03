@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.adapters.PuzzleMoveListener
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
+import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGamePuzzle
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import com.ciphero.questa.ui.menu.MenuActivity
@@ -44,7 +45,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
         binding.btnPause.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            startDialogVictoryGamePuzzle(requireContext(), this)
+            startDialogPauseGamePuzzle(requireContext(), this)
         }
 
         binding.btnBack.setOnClickListener {
