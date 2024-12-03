@@ -31,7 +31,7 @@ class PuzzleGameAdapter(
 
     private var emptyPosition: Int = cardList.size - 1
     private val puzzleImageSetup = GeneratorPuzzleImage(context)
-    private val levelConfig = puzzleImageSetup.levelConfig
+    private val levelConfig = puzzleImageSetup.gridConfig
     private val winListPuzzle: List<Int> = levelConfig.victoryListPuzzle
     private var timerStarted = false
 

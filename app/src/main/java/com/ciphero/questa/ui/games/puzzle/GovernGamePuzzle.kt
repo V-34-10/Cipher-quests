@@ -40,7 +40,7 @@ object GovernGamePuzzle {
     @SuppressLint("DiscouragedApi")
     private fun getShuffledPuzzles(context: Context): MutableList<Puzzle> {
         val puzzleImageSetup = GeneratorPuzzleImage(context)
-        val levelConfig = puzzleImageSetup.levelConfig
+        val levelConfig = puzzleImageSetup.gridConfig
 
         val resourcesPuzzles = levelConfig.victoryListPuzzle.dropLast(1)
         val sectorPuzzle =
@@ -62,7 +62,7 @@ object GovernGamePuzzle {
         context: Context
     ) {
         val puzzleImageSetup = GeneratorPuzzleImage(context)
-        val levelConfig = puzzleImageSetup.levelConfig
+        val levelConfig = puzzleImageSetup.gridConfig
         puzzleAdapter = PuzzleGameAdapter(
             binding.sceneCard,
             getShuffledPuzzles(context),
