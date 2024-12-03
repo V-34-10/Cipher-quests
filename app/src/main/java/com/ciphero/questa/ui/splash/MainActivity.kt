@@ -2,12 +2,12 @@ package com.ciphero.questa.ui.splash
 
 import android.animation.ValueAnimator
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ciphero.questa.databinding.ActivityMainBinding
+import com.ciphero.questa.ui.daily.DailyRewardActivity
 import com.ciphero.questa.ui.privacy.PrivacyActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI
 import com.ciphero.questa.utils.NetworkCheck
@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +28,12 @@ class MainActivity : AppCompatActivity() {
                 delay(3000L)
                 loadingOfferWall()
             }*/
+            checkNavigateToPrivacyOrDaily()
         } else {
             animProgressBar(3000L)
             lifecycleScope.launch {
                 delay(3000L)
-                startActivity(Intent(this@MainActivity, PrivacyActivity::class.java))
-                finish()
+                checkNavigateToPrivacyOrDaily()
             }
         }
     }
@@ -51,6 +50,17 @@ class MainActivity : AppCompatActivity() {
 
         animator.start()
     }
+
+    private fun checkNavigateToPrivacyOrDaily() {
+        val navigateActivity = when {
+            privacyAccepted() -> DailyRewardActivity::class.java
+            else -> PrivacyActivity::class.java
+        }
+        startActivity(Intent(this, navigateActivity))
+        finish()
+    }
+
+    private fun privacyAccepted(): Boolean = getSharedPreferences("CipherQuestsPref", MODE_PRIVATE).getBoolean("Privacy", false)
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
