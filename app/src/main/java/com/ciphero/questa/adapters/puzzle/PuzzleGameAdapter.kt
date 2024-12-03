@@ -1,4 +1,4 @@
-package com.ciphero.questa.adapters
+package com.ciphero.questa.adapters.puzzle
 
 import android.content.Context
 import android.view.LayoutInflater

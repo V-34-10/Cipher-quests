@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ciphero.questa.R
-import com.ciphero.questa.adapters.PuzzleGameAdapter
+import com.ciphero.questa.adapters.puzzle.PuzzleGameAdapter
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.model.Puzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator

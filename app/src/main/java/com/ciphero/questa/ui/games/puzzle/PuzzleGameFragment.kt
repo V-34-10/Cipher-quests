@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
-import com.ciphero.questa.adapters.PuzzleMoveListener
+import com.ciphero.questa.adapters.puzzle.PuzzleMoveListener
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
