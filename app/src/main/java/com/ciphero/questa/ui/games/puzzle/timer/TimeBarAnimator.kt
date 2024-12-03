@@ -1,4 +1,4 @@
-package com.ciphero.questa.ui.games.puzzle.animator
+package com.ciphero.questa.ui.games.puzzle.timer
 
 import android.animation.ValueAnimator
 import android.content.Context

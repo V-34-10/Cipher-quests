@@ -7,7 +7,7 @@ import com.ciphero.questa.R
 import com.ciphero.questa.adapters.PuzzleGameAdapter
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.model.Puzzle
-import com.ciphero.questa.ui.games.puzzle.animator.TimeBarAnimator
+import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import com.ciphero.questa.ui.games.puzzle.image.GeneratorPuzzleImage
 
 @SuppressLint("StaticFieldLeak")

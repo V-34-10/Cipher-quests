@@ -11,7 +11,7 @@ import com.ciphero.questa.R
 import com.ciphero.questa.adapters.PuzzleMoveListener
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
-import com.ciphero.questa.ui.games.puzzle.animator.TimeBarAnimator
+import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import com.ciphero.questa.ui.menu.MenuActivity
 
 class PuzzleGameFragment : Fragment(), PuzzleMoveListener {

@@ -13,7 +13,7 @@ import com.ciphero.questa.model.Puzzle
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 import com.ciphero.questa.ui.games.puzzle.image.GeneratorPuzzleImage
-import com.ciphero.questa.ui.games.puzzle.animator.TimeBarAnimator
+import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import java.util.Collections
 import kotlin.math.abs
 
