@@ -8,7 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
-import com.ciphero.questa.ui.games.puzzle.GovernGamePuzzle.restartRound
+import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle.restartRound
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 

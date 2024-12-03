@@ -1,4 +1,4 @@
-package com.ciphero.questa.ui.games.puzzle
+package com.ciphero.questa.ui.games.puzzle.controller
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -22,8 +22,8 @@ object GovernGamePuzzle {
         binding: FragmentPuzzleGameBinding,
         context: Context
     ) {
-        this.binding = binding
-        this.context = context
+        GovernGamePuzzle.binding = binding
+        GovernGamePuzzle.context = context
         timer = TimeBarAnimator(null)
     }
 
