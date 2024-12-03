@@ -5,102 +5,72 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.widget.ImageView
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.ui.games.puzzle.GovernGamePuzzle.restartRound
 import com.ciphero.questa.ui.menu.MenuActivity
+import com.ciphero.questa.ui.games.findpair.CardGameManager
 
 object DialogsBaseGame {
 
-    private fun createDialog(context: Context, layoutResId: Int): Dialog {
-        val dialog = Dialog(context, R.style.DialogTheme)
-        dialog.setContentView(layoutResId)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        return dialog
-    }
+    private fun createDialog(context: Context, layoutResId: Int) =
+        Dialog(context, R.style.DialogTheme).apply {
+            setContentView(layoutResId)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setCanceledOnTouchOutside(false)
+        }
 
-    private fun startDialog(
-        context: Context,
+    private fun showDialog(
+        fragment: Fragment,
         layoutResId: Int,
-        buttonIdNext: Int,
-        buttonIdExit: Int,
-        onDismiss: () -> Unit,
-        onExit: () -> Unit = {}
+        onDismiss: () -> Unit
     ) {
-        val dialog = createDialog(context, layoutResId)
-        val buttonNext = dialog.findViewById<ImageView>(buttonIdNext)
-        val buttonExit = dialog.findViewById<ImageView>(buttonIdExit)
-        buttonNext.setOnClickListener {
+        val dialog = createDialog(fragment.requireContext(), layoutResId)
+        dialog.findViewById<View>(R.id.btn_continue)?.setOnClickListener {
             dialog.dismiss()
             onDismiss()
         }
-        buttonExit.setOnClickListener {
+        dialog.findViewById<View>(R.id.btn_next)?.setOnClickListener {
             dialog.dismiss()
-            onExit()
+            onDismiss()
+        }
+        dialog.findViewById<View>(R.id.btn_exit)?.setOnClickListener {
+            dialog.dismiss()
+            navigateToMenu(fragment)
         }
         dialog.show()
     }
 
-    /*fun startDialogLoseGameFindPair(context: Context, gameManager: CardGameManager?) {
-        startDialog(context, R.layout.dialog_game_lose, R.id.btn_restart_dialog) {
-            gameManager?.stopGame()
-        }
-    }
+    fun startDialogLoseGameFindPair(fragment: Fragment, gameManager: CardGameManager?) = showDialog(
+        fragment, R.layout.dialog_game_find_pair_lose
+    ) { gameManager?.stopGame() }
 
-    fun startDialogVictoryGameFindPair(
-        context: Context,
-        gameManager: CardGameManager?,
-        bindingSetup: BindingSetup?
-    ) {
-        startDialog(context, R.layout.dialog_game_victory, R.id.btn_next_dialog) {
-            gameManager?.stopGame()
-            bindingSetup?.observeButtonBonusGame(context)
-        }
-    }*/
+    fun startDialogPauseGameFindPair(fragment: Fragment, gameManager: CardGameManager?) =
+        showDialog(
+            fragment, R.layout.dialog_game_find_pair_pause
+        ) { gameManager?.stopGame() }
 
-    fun startDialogLoseGamePuzzle(
-        context: Context,
-        fragment: Fragment
-    ) {
-        startDialog(
-            context, R.layout.dialog_game_lose, R.id.btn_exit, R.id.btn_next,
-            onDismiss = { restartRound() },
-            onExit = {
-                val intent = Intent(fragment.requireContext(), MenuActivity::class.java)
-                fragment.startActivity(intent)
-                fragment.requireActivity().finish()
-            }
-        )
-    }
+    fun startDialogVictoryGameFindPair(fragment: Fragment, gameManager: CardGameManager?) =
+        showDialog(
+            fragment, R.layout.dialog_game_find_pair_victory
+        ) { gameManager?.stopGame() }
 
-    fun startDialogPauseGamePuzzle(
-        context: Context,
-        fragment: Fragment
-    ) {
-        startDialog(
-            context, R.layout.dialog_game_pause, R.id.btn_exit, R.id.btn_next,
-            onDismiss = { restartRound() },
-            onExit = {
-                val intent = Intent(fragment.requireContext(), MenuActivity::class.java)
-                fragment.startActivity(intent)
-                fragment.requireActivity().finish()
-            }
-        )
-    }
+    fun startDialogLoseGamePuzzle(fragment: Fragment) = showDialog(
+        fragment, R.layout.dialog_game_lose
+    ) { restartRound() }
 
-    fun startDialogVictoryGamePuzzle(
-        context: Context,
-        fragment: Fragment
-    ) {
-        startDialog(context, R.layout.dialog_game_victory, R.id.btn_next, R.id.btn_exit,
-            onDismiss = { restartRound() },
-            onExit = {
-                val intent = Intent(fragment.requireContext(), MenuActivity::class.java)
-                fragment.startActivity(intent)
-                fragment.requireActivity().finish()
-            }
-        )
+    fun startDialogPauseGamePuzzle(fragment: Fragment) = showDialog(
+        fragment, R.layout.dialog_game_pause
+    ) { restartRound() }
+
+    fun startDialogVictoryGamePuzzle(fragment: Fragment) = showDialog(
+        fragment, R.layout.dialog_game_victory
+    ) { restartRound() }
+
+    private fun navigateToMenu(fragment: Fragment) {
+        val intent = Intent(fragment.requireContext(), MenuActivity::class.java)
+        fragment.startActivity(intent)
+        fragment.requireActivity().finish()
     }
 }
