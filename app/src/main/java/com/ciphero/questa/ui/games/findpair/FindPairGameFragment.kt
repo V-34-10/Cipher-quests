@@ -1,18 +1,62 @@
 package com.ciphero.questa.ui.games.findpair
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
+import com.ciphero.questa.databinding.FragmentFindPairGameBinding
+import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGameFindPair
+import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
+import com.ciphero.questa.ui.menu.MenuActivity
 
 class FindPairGameFragment : Fragment() {
-
+    private var _binding: FragmentFindPairGameBinding? = null
+    private val binding get() = _binding!!
+    private val scaleAnimation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.anim_scale
+        )
+    }
+    private lateinit var gameGovern: ControllerFindPairGame
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_find_pair_game, container, false)
+    ): View {
+        _binding = FragmentFindPairGameBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        gameGovern = ControllerFindPairGame(requireContext(), binding)
+
+        binding.btnPause.setOnClickListener {
+            it.startAnimation(scaleAnimation)
+            startDialogPauseGameFindPair(this, gameGovern)
+        }
+
+        binding.btnBack.setOnClickListener {
+            it.startAnimation(scaleAnimation)
+            gameGovern.stopGame()
+            startActivity(Intent(requireContext(), MenuActivity::class.java))
+            activity?.finish()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        gameGovern.stopGame()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
