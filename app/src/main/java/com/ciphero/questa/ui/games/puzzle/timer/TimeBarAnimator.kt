@@ -1,15 +1,17 @@
 package com.ciphero.questa.ui.games.puzzle.timer
 
 import android.animation.ValueAnimator
-import android.content.Context
 import android.os.CountDownTimer
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
+import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGameFindPair
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGamePuzzle
+import com.ciphero.questa.ui.games.findpair.CardGameManager
+import com.ciphero.questa.ui.games.findpair.FindPairGameFragment
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 
 class TimeBarAnimator(
     private val binding: FragmentPuzzleGameBinding,
-    private val context: Context
+    private val gameManager: CardGameManager?
 ) {
     private var timer: CountDownTimer? = null
     private var startTime = 0L
@@ -32,10 +34,16 @@ class TimeBarAnimator(
             }
 
             override fun onFinish() {
-                startDialogLoseGamePuzzle(
-                    context,
-                    PuzzleGameFragment()
-                )
+                when (binding) {
+                    is FragmentPuzzleGameBinding ->
+                        startDialogLoseGamePuzzle(PuzzleGameFragment())
+
+                    else -> startDialogLoseGameFindPair(
+                        FindPairGameFragment(),
+                        gameManager
+                    )
+                }
+
             }
         }.start()
     }
