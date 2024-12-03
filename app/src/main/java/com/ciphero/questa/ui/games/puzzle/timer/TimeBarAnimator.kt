@@ -6,12 +6,12 @@ import androidx.viewbinding.ViewBinding
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGameFindPair
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGamePuzzle
-import com.ciphero.questa.ui.games.findpair.CardGameManager
+import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.games.findpair.FindPairGameFragment
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 
 class TimeBarAnimator(
-    private val gameManager: CardGameManager?
+    private val gameManager: ControllerFindPairGame?
 ) {
     private var timer: CountDownTimer? = null
     private var startTime = 0L

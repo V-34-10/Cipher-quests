@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.ui.games.puzzle.GovernGamePuzzle.restartRound
 import com.ciphero.questa.ui.menu.MenuActivity
-import com.ciphero.questa.ui.games.findpair.CardGameManager
+import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 
 object DialogsBaseGame {
 
@@ -42,16 +42,16 @@ object DialogsBaseGame {
         dialog.show()
     }
 
-    fun startDialogLoseGameFindPair(fragment: Fragment, gameManager: CardGameManager?) = showDialog(
+    fun startDialogLoseGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) = showDialog(
         fragment, R.layout.dialog_game_find_pair_lose
     ) { gameManager?.stopGame() }
 
-    fun startDialogPauseGameFindPair(fragment: Fragment, gameManager: CardGameManager?) =
+    fun startDialogPauseGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) =
         showDialog(
             fragment, R.layout.dialog_game_find_pair_pause
         ) { gameManager?.stopGame() }
 
-    fun startDialogVictoryGameFindPair(fragment: Fragment, gameManager: CardGameManager?) =
+    fun startDialogVictoryGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) =
         showDialog(
             fragment, R.layout.dialog_game_find_pair_victory
         ) { gameManager?.stopGame() }
