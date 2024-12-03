@@ -1,6 +1,7 @@
 package com.ciphero.questa.ui.settings
 
 import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.animation.AnimationUtils
@@ -10,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivitySettingsBinding
+import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI
 
 class SettingsActivity : AppCompatActivity() {
@@ -87,11 +89,12 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     @Deprecated(
-        "Deprecated in Java",
-        ReplaceWith("super.onBackPressed()", "androidx.appcompat.app.AppCompatActivity")
+        "Deprecated in Java"
     )
     override fun onBackPressed() {
         super.onBackPressed()
+        startActivity(Intent(this, MenuActivity::class.java))
+        finish()
         musicSet.release()
     }
 }
