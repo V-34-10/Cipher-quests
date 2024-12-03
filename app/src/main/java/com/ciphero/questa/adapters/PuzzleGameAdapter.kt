@@ -24,7 +24,7 @@ interface PuzzleMoveListener {
 class PuzzleGameAdapter(
     recyclerView: RecyclerView,
     private val cardList: MutableList<Puzzle>,
-    private val context: Context,
+    context: Context,
     private var timerAnimation: TimeBarAnimator,
     binding: FragmentPuzzleGameBinding,
 ) : RecyclerView.Adapter<PuzzleGameAdapter.ViewHolder>() {
@@ -36,7 +36,7 @@ class PuzzleGameAdapter(
     private var timerStarted = false
 
     init {
-        timerAnimation = TimeBarAnimator(binding, context)
+        timerAnimation = TimeBarAnimator(binding, null)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -110,10 +110,7 @@ class PuzzleGameAdapter(
         notifyItemChanged(fromPosition)
         notifyItemChanged(toPosition)
 
-        if (checkCard(cardList, winListPuzzle)) startDialogVictoryGamePuzzle(
-            context,
-            fragment = PuzzleGameFragment()
-        )
+        if (checkCard(cardList, winListPuzzle)) startDialogVictoryGamePuzzle(fragment = PuzzleGameFragment())
     }
 
     fun canMoveStepGame(clickedPosition: Int, emptyPosition: Int, gridSize: Int): Boolean {

@@ -11,7 +11,6 @@ import com.ciphero.questa.R
 import com.ciphero.questa.adapters.PuzzleMoveListener
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGamePuzzle
-import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import com.ciphero.questa.ui.menu.MenuActivity
 
@@ -40,12 +39,12 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        timer = TimeBarAnimator(binding, requireContext())
+        timer = TimeBarAnimator(binding, null)
         gameGovern.startRound()
 
         binding.btnPause.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            startDialogPauseGamePuzzle(requireContext(), this)
+            startDialogPauseGamePuzzle(this)
         }
 
         binding.btnBack.setOnClickListener {
