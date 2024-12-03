@@ -1,8 +1,8 @@
 package com.ciphero.questa.ui.games.findpair.controller
 
-import com.ciphero.questa.ui.games.findpair.InitializationAdapter
-import com.ciphero.questa.ui.games.findpair.ItemManager
-import com.ciphero.questa.ui.games.findpair.ObserveClickPair
+import com.ciphero.questa.adapters.findpairs.InitializationAdapter
+import com.ciphero.questa.ui.games.findpair.image.ItemManager
+import com.ciphero.questa.ui.games.findpair.observer.ObserveClickPair
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 
 data class GameFindPairComponents(
