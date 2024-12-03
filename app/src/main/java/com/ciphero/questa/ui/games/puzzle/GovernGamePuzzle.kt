@@ -24,7 +24,7 @@ object GovernGamePuzzle {
     ) {
         this.binding = binding
         this.context = context
-        timer = TimeBarAnimator(binding, null)
+        timer = TimeBarAnimator(null)
     }
 
     fun startRound() {
@@ -33,7 +33,7 @@ object GovernGamePuzzle {
 
     fun restartRound() {
         moveCount = 0
-        timer.stopTimer()
+        timer.stopTimer(binding)
         setAdapter(binding, context)
     }
 
