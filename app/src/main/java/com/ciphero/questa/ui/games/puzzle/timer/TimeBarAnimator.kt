@@ -4,7 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.CountDownTimer
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
-import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
+import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 
 class TimeBarAnimator(
@@ -32,7 +32,7 @@ class TimeBarAnimator(
             }
 
             override fun onFinish() {
-                startDialogVictoryGamePuzzle(
+                startDialogLoseGamePuzzle(
                     context,
                     PuzzleGameFragment()
                 )
