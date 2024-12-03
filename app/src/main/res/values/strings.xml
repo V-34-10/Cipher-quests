@@ -34,4 +34,5 @@
     <string name="link_privacy">https://www.google.com</string>
     <string name="default_balance">0</string>
     <string name="reset_message">Reset Balance Score</string>
+    <string name="button_next_dialog">button_next_dialog</string>
 </resources>
