@@ -7,24 +7,23 @@ object CasinoQuizQuestions {
     val questions = listOf(
         Question(
             "What is the house edge in roulette?",
-            listOf("0", "0.5%", "2.7%", "5.26%"),
+            listOf("0.5%", "2.7%", "5.26%"),
             "5.26%"
         ),
         Question(
             "How many cards are in a standard deck used in blackjack?",
-            listOf("52", "54", "48", "50"),
+            listOf("52", "54", "48"),
             "52"
         ),
         Question(
             "What is the highest possible hand in poker?",
-            listOf("Royal flush", "Straight flush", "Four of a kind", "Full house"),
+            listOf("Royal flush", "Straight flush", "Full house"),
             "Royal flush"
         ),
         Question(
             "What are the kissing kings?",
             listOf(
                 "King of clubs and King of spades",
-                "King of diamonds and King of spades",
                 "King of clubs and King of diamonds",
                 "Kind of hearts and King of diamonds"
             ),
@@ -33,7 +32,6 @@ object CasinoQuizQuestions {
         Question(
             "What is the difference between an American roulette wheel and a European roulette wheel?",
             listOf(
-                "There are no green spots on a European wheel",
                 "An American wheel has a double zero",
                 "The wheels spin in the opposite direction",
                 "No difference"
@@ -42,13 +40,12 @@ object CasinoQuizQuestions {
         ),
         Question(
             "How many betting positions are there on a Baccarat table?",
-            listOf("seven", "fifteen", "fourteen", "nine"),
+            listOf("fifteen", "fourteen", "nine"),
             "fourteen"
         ),
         Question(
             "What is a dead man's hand?",
             listOf(
-                "Royal flush in spades",
                 "Aces and eights",
                 "Ace high with no pair",
                 "Four deuces"
@@ -57,13 +54,12 @@ object CasinoQuizQuestions {
         ),
         Question(
             "How many ways are there to make a royal flush in five card stud?",
-            listOf("Two", "One", "Four", "Thirteen"),
+            listOf("Two", "One", "Four"),
             "Four"
         ),
         Question(
             "In a new deck of cards what order are the suits of the cards in from top to bottom?",
             listOf(
-                "Clubs hearts diamonds spades",
                 "Clubs diamonds hearts spades",
                 "Hearts clubs diamonds spades",
                 "Hearts diamonds clubs spades"
@@ -72,22 +68,22 @@ object CasinoQuizQuestions {
         ),
         Question(
             "What is the only mathematically beatable game in a casino?",
-            listOf("Baccarat", "Craps", "Blackjack", "Roulette"),
+            listOf("Baccarat", "Craps", "Blackjack"),
             "Blackjack"
         ),
         Question(
             "Where is the largest casino in the world?",
-            listOf("Nevada", "The U.S. Virgin Islands", "New Jersey", "Connecticut"),
+            listOf("Nevada", "New Jersey", "Connecticut"),
             "Connecticut"
         ),
         Question(
             "How many cards are in a six deck shoe used for Spanish 21?",
-            listOf("288", "240", "312", "324"),
+            listOf("288", "240", "312"),
             "288"
         ),
         Question(
             "In craps, what roll is 'little joe from kokomo'?",
-            listOf("7", "2", "4", "A 5 made with a 3 and a 2"),
+            listOf("2", "4", "A 5 made with a 3 and a 2"),
             "4"
         ),
         Question(
@@ -95,29 +91,28 @@ object CasinoQuizQuestions {
             listOf(
                 "to keep your place in a game",
                 "to hold the cards",
-                "to cheat",
-                "to keep cards clean"
+                "to cheat"
             ),
             "to cheat"
         ),
         Question(
             "In the game of Keno, how many numbers are drawn each game?",
-            listOf("20", "80", "10", "40"),
+            listOf("20", "80", "10"),
             "20"
         ),
         Question(
             "In Bingo, what letter is represented by the number 31?",
-            listOf("N", "B", "I", "G"),
+            listOf("N", "B", "G"),
             "N"
         ),
         Question(
             "In what game can you hop or press, and even win when you're wrong?",
-            listOf("Slots", "Blackjack", "Craps", "Pai Gow"),
+            listOf("Slots", "Blackjack", "Craps"),
             "Craps"
         ),
         Question(
             "How many number combinations are on a pair of dice?",
-            listOf("21", "11", "12", "24"),
+            listOf("21", "11", "24"),
             "21"
         )
     )
