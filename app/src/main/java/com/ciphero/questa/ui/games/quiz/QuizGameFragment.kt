@@ -22,7 +22,6 @@ class QuizGameFragment : Fragment() {
     private var _binding: FragmentQuizGameBinding? = null
     private val binding get() = _binding!!
     private var currentQuestion: Question? = null
-    private var selectedAnswerButton: TextView? = null
     private lateinit var musicSet: MusicControllerPlayer
     private val scaleAnimation by lazy {
         AnimationUtils.loadAnimation(
@@ -30,6 +29,10 @@ class QuizGameFragment : Fragment() {
             R.anim.anim_scale
         )
     }
+    private val answerButtons by lazy {
+        arrayOf(binding.btnFirstAnswer, binding.btnSecondAnswer, binding.btnThreeAnswer)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,23 +51,36 @@ class QuizGameFragment : Fragment() {
 
         val answerClickListener = View.OnClickListener {
             checkAnswer(it as TextView)
+            disableAnswerButtons()
         }
 
-        binding.btnFirstAnswer.setOnClickListener(answerClickListener)
-        binding.btnSecondAnswer.setOnClickListener(answerClickListener)
-        binding.btnThreeAnswer.setOnClickListener(answerClickListener)
+        answerButtons.forEach { it.setOnClickListener(answerClickListener) }
 
         binding.btnNext.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            selectedAnswerButton?.setBackgroundResource(R.drawable.background_basic_answer)
+            resetAnswerButtonBackgrounds()
             binding.btnNext.visibility = View.GONE
             showNextQuestion()
         }
         binding.btnBack.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            startActivity(Intent(requireContext(), MenuActivity::class.java))
-            activity?.finish()
+            navigateBackToMenu()
         }
+    }
+
+    private fun resetAnswerButtonBackgrounds() {
+        answerButtons.forEach {
+            it.setBackgroundResource(R.drawable.background_basic_answer)
+        }
+    }
+
+    private fun disableAnswerButtons() {
+        answerButtons.forEach { it.isEnabled = false }
+    }
+
+    private fun navigateBackToMenu() {
+        startActivity(Intent(requireContext(), MenuActivity::class.java))
+        activity?.finish()
     }
 
     private fun showNextQuestion() {
@@ -72,26 +88,17 @@ class QuizGameFragment : Fragment() {
         binding.textQuestion.text = currentQuestion?.text
 
         val answers = currentQuestion?.answers?.shuffled() ?: emptyList()
-
-        with(binding) {
-            btnFirstAnswer.text = answers.getOrNull(0)
-            btnSecondAnswer.text = answers.getOrNull(1)
-            btnThreeAnswer.text = answers.getOrNull(2)
-
-            btnFirstAnswer.isEnabled = true
-            btnSecondAnswer.isEnabled = true
-            btnThreeAnswer.isEnabled = true
-
-            btnNext.visibility = View.GONE
+        answerButtons.forEachIndexed { index, button ->
+            button.text = answers.getOrNull(index)
+            button.isEnabled = true
         }
+        binding.btnNext.visibility = View.GONE
     }
 
     private fun checkAnswer(button: TextView) {
-        selectedAnswerButton = button
         val isCorrect = button.text == currentQuestion?.correctAnswer
 
-        val animationResId =
-            if (isCorrect) R.animator.correct_answer_animation else R.animator.incorrect_answer_animation
+        val animationResId = if (isCorrect) R.animator.correct_answer_animation else R.animator.incorrect_answer_animation
         val animator = AnimatorInflater.loadAnimator(requireContext(), animationResId)
         animator.setTarget(button)
         animator.start()
@@ -104,12 +111,6 @@ class QuizGameFragment : Fragment() {
                 binding.btnNext.visibility = View.VISIBLE
             }
         })
-
-        with(binding) {
-            btnFirstAnswer.isEnabled = false
-            btnSecondAnswer.isEnabled = false
-            btnThreeAnswer.isEnabled = false
-        }
     }
 
     override fun onDestroy() {
