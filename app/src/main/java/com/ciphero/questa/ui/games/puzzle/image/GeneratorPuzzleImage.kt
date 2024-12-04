@@ -7,8 +7,8 @@ class GeneratorPuzzleImage(private val context: Context) {
         context.resources.getIdentifier(name, "drawable", context.packageName)
 
     val gridConfig = GridPuzzle(
-        victoryListPuzzle = List(9) { resIdForName("puzzle_$it") },
+        victoryListPuzzle = List(9) { resIdForName("puzzle$it") },
         spanGrid = 3,
-        idEndPuzzle = 0
+        idEndPuzzle = 8
     )
 }
