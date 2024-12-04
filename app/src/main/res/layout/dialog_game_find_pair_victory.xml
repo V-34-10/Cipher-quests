@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/btn_continue"
+        android:id="@+id/btn_next"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginEnd="80dp"
