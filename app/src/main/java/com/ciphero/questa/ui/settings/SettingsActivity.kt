@@ -27,7 +27,7 @@ class SettingsActivity : AppCompatActivity() {
         DecoratorNavigationUI.hideNavigationBar(this)
 
         musicSet = MusicControllerPlayer(this)
-        RunPlayer.soundMode(this, R.raw.music_menu, musicSet)
+        musicSet.apply { playSound(R.raw.music_menu, true) }
 
         binding.buttonResetScore.setOnClickListener {
             it.startAnimation(scaleAnimation)
@@ -41,15 +41,15 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setVolumeControl() {
-        val maxVolume = managerAudioService.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        binding.seekBarSounds.max = maxVolume
+        val maxVolumeSYSTEM = managerAudioService.getStreamMaxVolume(AudioManager.STREAM_SYSTEM)
+        binding.seekBarSounds.max = maxVolumeSYSTEM
         binding.seekBarSounds.progress =
-            managerAudioService.getStreamVolume(AudioManager.STREAM_MUSIC)
+            managerAudioService.getStreamVolume(AudioManager.STREAM_SYSTEM)
 
         binding.seekBarSounds.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    managerAudioService.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0)
+                    managerAudioService.setStreamVolume(AudioManager.STREAM_SYSTEM, progress, 0)
                 }
             }
 
@@ -57,7 +57,8 @@ class SettingsActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
-        binding.seekBarMusic.max = maxVolume
+        val maxVolumeMUSIC = managerAudioService.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        binding.seekBarMusic.max = maxVolumeMUSIC
         binding.seekBarMusic.progress =
             managerAudioService.getStreamVolume(AudioManager.STREAM_MUSIC)
 
