@@ -12,6 +12,7 @@ import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityMenuBinding
 import com.ciphero.questa.ui.games.SceneBasicActivity
 import com.ciphero.questa.ui.privacy.PrivacyActivity
+import com.ciphero.questa.ui.settings.MusicControllerPlayer
 import com.ciphero.questa.ui.settings.SettingsActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI
 import kotlin.system.exitProcess
@@ -20,11 +21,14 @@ class MenuActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMenuBinding.inflate(layoutInflater) }
     private val preferences by lazy { getSharedPreferences("CipherQuestsPref", MODE_PRIVATE) }
     private val scaleAnimation by lazy { AnimationUtils.loadAnimation(this, R.anim.anim_scale) }
+    private lateinit var musicSet: MusicControllerPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
+        musicSet = MusicControllerPlayer(this)
+        musicSet.apply { playSound(R.raw.music_menu, true) }
         setupClickListeners()
     }
 

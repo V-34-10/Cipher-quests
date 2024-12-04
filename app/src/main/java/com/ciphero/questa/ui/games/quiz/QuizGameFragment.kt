@@ -13,13 +13,14 @@ import com.ciphero.questa.R
 import com.ciphero.questa.databinding.FragmentQuizGameBinding
 import com.ciphero.questa.model.CasinoQuizQuestions
 import com.ciphero.questa.model.Question
+import com.ciphero.questa.ui.settings.MusicControllerPlayer
 
 class QuizGameFragment : Fragment() {
     private var _binding: FragmentQuizGameBinding? = null
     private val binding get() = _binding!!
     private var currentQuestion: Question? = null
     private var selectedAnswerButton: TextView? = null
-
+    private lateinit var musicSet: MusicControllerPlayer
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,6 +31,9 @@ class QuizGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        musicSet = MusicControllerPlayer(requireContext())
+        musicSet.apply { playSound(R.raw.music_quiz, true) }
 
         showNextQuestion()
 

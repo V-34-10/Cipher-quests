@@ -14,6 +14,7 @@ import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGameP
 import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 import com.ciphero.questa.ui.menu.MenuActivity
+import com.ciphero.questa.ui.settings.MusicControllerPlayer
 
 class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     private var _binding: FragmentPuzzleGameBinding? = null
@@ -26,6 +27,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     }
     private lateinit var timer: TimeBarAnimator
     private lateinit var gameGovern: GovernGamePuzzle
+    private lateinit var musicSet: MusicControllerPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,9 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        musicSet = MusicControllerPlayer(requireContext())
+        musicSet.apply { playSound(R.raw.music_menu, true) }
 
         timer = TimeBarAnimator( null)
         gameGovern.startRound()
