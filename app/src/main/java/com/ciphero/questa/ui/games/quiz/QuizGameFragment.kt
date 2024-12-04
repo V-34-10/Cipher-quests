@@ -56,8 +56,7 @@ class QuizGameFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            selectedAnswerButton?.background = null
-            selectedAnswerButton = null
+            selectedAnswerButton?.setBackgroundResource(R.drawable.background_basic_answer)
             binding.btnNext.visibility = View.GONE
             showNextQuestion()
         }
