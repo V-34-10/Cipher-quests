@@ -55,7 +55,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
         binding.btnBack.setOnClickListener {
             it.startAnimation(scaleAnimation)
-            startActivity(Intent(context, MenuActivity::class.java))
+            startActivity(Intent(requireContext(), MenuActivity::class.java))
             activity?.finish()
         }
 

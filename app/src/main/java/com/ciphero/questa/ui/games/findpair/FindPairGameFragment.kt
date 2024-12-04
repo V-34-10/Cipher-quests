@@ -52,7 +52,6 @@ class FindPairGameFragment : Fragment() {
             startActivity(Intent(requireContext(), MenuActivity::class.java))
             activity?.finish()
         }
-
     }
 
     override fun onDestroy() {
