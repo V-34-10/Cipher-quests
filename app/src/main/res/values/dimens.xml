@@ -6,4 +6,5 @@
     <dimen name="sp64">64sp</dimen>
     <dimen name="dp30">30dp</dimen>
     <dimen name="dp10">10dp</dimen>
+    <dimen name="sp23">23sp</dimen>
 </resources>
