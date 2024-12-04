@@ -37,7 +37,7 @@ class FindPairGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         musicSet = MusicControllerPlayer(requireContext())
-        musicSet.apply { playSound(R.raw.music_menu, true) }
+        musicSet.apply { playSound(R.raw.music_find_pair, true) }
 
         gameGovern = ControllerFindPairGame(requireContext(), binding)
 
@@ -54,8 +54,19 @@ class FindPairGameFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        musicSet.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicSet.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        musicSet.release()
         gameGovern.stopGame()
     }
 

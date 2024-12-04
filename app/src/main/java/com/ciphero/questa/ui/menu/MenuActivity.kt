@@ -63,7 +63,23 @@ class MenuActivity : AppCompatActivity() {
     )
     override fun onBackPressed() {
         super.onBackPressed()
+        musicSet.release()
         finishApp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        musicSet.release()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        musicSet.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicSet.pause()
     }
 
     private fun finishApp() {

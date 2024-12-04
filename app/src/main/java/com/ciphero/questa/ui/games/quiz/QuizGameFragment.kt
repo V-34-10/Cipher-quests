@@ -113,6 +113,21 @@ class QuizGameFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        musicSet.release()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        musicSet.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicSet.pause()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

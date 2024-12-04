@@ -43,7 +43,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
         super.onViewCreated(view, savedInstanceState)
 
         musicSet = MusicControllerPlayer(requireContext())
-        musicSet.apply { playSound(R.raw.music_menu, true) }
+        musicSet.apply { playSound(R.raw.music_puzzle, true) }
 
         timer = TimeBarAnimator( null)
         gameGovern.startRound()
@@ -61,8 +61,19 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        musicSet.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicSet.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        musicSet.release()
         timer.stopTimer(binding)
     }
 
