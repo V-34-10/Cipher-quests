@@ -4,22 +4,49 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
+import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle.restartRound
 import com.ciphero.questa.ui.menu.MenuActivity
-import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 
 object DialogsBaseGame {
 
-    private fun createDialog(context: Context, layoutResId: Int) =
-        Dialog(context, R.style.DialogTheme).apply {
+    private fun createDialog(context: Context, layoutResId: Int): Dialog {
+        return Dialog(context, R.style.DialogTheme).apply {
             setContentView(layoutResId)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setCanceledOnTouchOutside(false)
+
+            window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            window?.let { window ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    window.setDecorFitsSystemWindows(false)
+                    val controller = window.insetsController
+                    controller?.let {
+                        it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                        it.systemBarsBehavior =
+                            WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    }
+                } else {
+                    window.setFlags(
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                    )
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = Color.TRANSPARENT
+                }
+            }
         }
+    }
 
     private fun showDialog(
         fragment: Fragment,
@@ -27,10 +54,6 @@ object DialogsBaseGame {
         onDismiss: () -> Unit
     ) {
         val dialog = createDialog(fragment.requireContext(), layoutResId)
-        dialog.findViewById<View>(R.id.btn_continue)?.setOnClickListener {
-            dialog.dismiss()
-            onDismiss()
-        }
         dialog.findViewById<View>(R.id.btn_next)?.setOnClickListener {
             dialog.dismiss()
             onDismiss()
@@ -42,9 +65,10 @@ object DialogsBaseGame {
         dialog.show()
     }
 
-    fun startDialogLoseGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) = showDialog(
-        fragment, R.layout.dialog_game_find_pair_lose
-    ) { gameManager?.stopGame() }
+    fun startDialogLoseGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) =
+        showDialog(
+            fragment, R.layout.dialog_game_find_pair_lose
+        ) { gameManager?.stopGame() }
 
     fun startDialogPauseGameFindPair(fragment: Fragment, gameManager: ControllerFindPairGame?) =
         showDialog(
