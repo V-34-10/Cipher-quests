@@ -14,7 +14,7 @@ class ControllerFindPairGame(
 ) {
     private val timer = TimeBarAnimator(this, binding)
     private val adapter = InitializationAdapter(binding)
-    private val itemManager = ItemManager()
+    private val itemManager = ItemManager(4)
     private val clickHandler = ObserveClickPair(adapter, itemManager, timer, fragment, binding)
 
     init {
