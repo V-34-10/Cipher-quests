@@ -1,64 +1,39 @@
 package com.ciphero.questa.ui.games.findpair.controller
 
-import android.content.Context
-import androidx.recyclerview.widget.GridLayoutManager
-import com.ciphero.questa.databinding.FragmentFindPairGameBinding
+import android.view.View
 import com.ciphero.questa.adapters.findpairs.InitializationAdapter
+import com.ciphero.questa.databinding.FragmentFindPairGameBinding
+import com.ciphero.questa.ui.games.findpair.FindPairGameFragment
 import com.ciphero.questa.ui.games.findpair.image.ItemManager
 import com.ciphero.questa.ui.games.findpair.observer.ObserveClickPair
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
 
 class ControllerFindPairGame(
-    private val context: Context,
-    private val binding: FragmentFindPairGameBinding
+    private val binding: FragmentFindPairGameBinding,
+    fragment: FindPairGameFragment
 ) {
-
-    private val gameComponents: GameFindPairComponents by lazy {
-        createGameComponents()
-    }
+    private val timer = TimeBarAnimator(this, binding)
+    private val adapter = InitializationAdapter(binding)
+    private val itemManager = ItemManager()
+    private val clickHandler = ObserveClickPair(adapter, itemManager, timer, fragment, binding)
 
     init {
-        initializeGame()
-    }
-
-    private fun createGameComponents(): GameFindPairComponents = GameFindPairComponents(
-        TimeBarAnimator(this),
-        InitializationAdapter(),
-        ItemManager(),
-        ObserveClickPair(
-            InitializationAdapter(),
-            ItemManager(),
-            TimeBarAnimator(this)
-        )
-    )
-
-    private fun initializeGame() {
-        with(gameComponents) {
-            pairItemManager.imageList
-            initializationAdapter.apply {
-                binding.sceneFindGame.layoutManager = GridLayoutManager(context, 3)
-                setAdapter(pairItemManager.getPairList())
-            }
-            observeClickHandler.setupClickListener(binding, this@ControllerFindPairGame)
-        }
+        itemManager.setupPairItems()
+        adapter.setAdapter(itemManager.getPairList())
+        clickHandler.setupClickListener(this)
     }
 
     fun stopGame() {
-        setGameStarted()
-        restartGameComponents()
+        resetGame()
+        timer.stopTimer(binding)
+        itemManager.resetPairs()
+        itemManager.setupPairItems()
+        adapter.resetAdapter()
     }
 
-    private fun setGameStarted() {
-        gameComponents.observeClickHandler.clickHandler.isGameStarted = false
-    }
-
-    private fun restartGameComponents() {
-        with(gameComponents) {
-            pairItemManager.apply {
-                resetPairs()
-                imageList
-            }
-            initializationAdapter.resetAdapter()
-        }
+    private fun resetGame() {
+        clickHandler.stepSearchPair = 0
+        clickHandler.isGameStarted = false
+        binding.btnOkay.visibility = View.GONE
     }
 }
