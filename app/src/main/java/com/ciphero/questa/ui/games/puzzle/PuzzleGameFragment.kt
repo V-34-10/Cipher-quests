@@ -34,8 +34,9 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPuzzleGameBinding.inflate(inflater, container, false)
+        timer = TimeBarAnimator(null, binding)
         gameGovern = GovernGamePuzzle
-        gameGovern.initGovernGamePuzzle(binding, requireContext())
+        gameGovern.initGovernGamePuzzle(binding, requireContext(), this, timer)
         return binding.root
     }
 
@@ -45,11 +46,11 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
         musicSet = MusicControllerPlayer(requireContext())
         musicSet.apply { playSound(R.raw.music_puzzle, true) }
 
-        timer = TimeBarAnimator( null)
         gameGovern.startRound()
 
         binding.btnPause.setOnClickListener {
             it.startAnimation(scaleAnimation)
+            timer.stopTimer(binding)
             startDialogPauseGamePuzzle(this)
         }
 
@@ -74,7 +75,6 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     override fun onDestroy() {
         super.onDestroy()
         musicSet.release()
-        timer.stopTimer(binding)
     }
 
     override fun onMovePuzzle(move: Int) {
@@ -83,6 +83,7 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        timer.stopTimer(binding)
         _binding = null
     }
 }
