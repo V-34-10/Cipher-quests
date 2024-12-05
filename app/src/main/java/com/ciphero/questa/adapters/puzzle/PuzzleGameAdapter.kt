@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ciphero.questa.R
-import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.model.Puzzle
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
@@ -25,8 +24,8 @@ class PuzzleGameAdapter(
     recyclerView: RecyclerView,
     private val cardList: MutableList<Puzzle>,
     context: Context,
-    private var timerAnimation: TimeBarAnimator,
-    private var binding: FragmentPuzzleGameBinding,
+    private var timer: TimeBarAnimator,
+    private var fragment: PuzzleGameFragment
 ) : RecyclerView.Adapter<PuzzleGameAdapter.ViewHolder>() {
 
     private var emptyPosition: Int = cardList.size - 1
@@ -34,10 +33,6 @@ class PuzzleGameAdapter(
     private val levelConfig = puzzleImageSetup.gridConfig
     private val winListPuzzle: List<Int> = levelConfig.victoryListPuzzle
     private var timerStarted = false
-
-    init {
-        timerAnimation = TimeBarAnimator(null)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -65,7 +60,7 @@ class PuzzleGameAdapter(
                     emptyPosition = adapterPosition
                 }
                 if (!timerStarted) {
-                    timerAnimation.startTimer(binding)
+                    timer.startTimer(fragment)
                     timerStarted = true
                 }
             }
