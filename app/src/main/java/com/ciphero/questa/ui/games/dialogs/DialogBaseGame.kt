@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
@@ -53,12 +54,20 @@ object DialogsBaseGame {
         layoutResId: Int,
         onDismiss: () -> Unit
     ) {
+        val scaleAnimation by lazy {
+            AnimationUtils.loadAnimation(
+                fragment.requireContext(),
+                R.anim.anim_scale
+            )
+        }
         val dialog = createDialog(fragment.requireContext(), layoutResId)
         dialog.findViewById<View>(R.id.btn_next)?.setOnClickListener {
+            it.startAnimation(scaleAnimation)
             dialog.dismiss()
             onDismiss()
         }
         dialog.findViewById<View>(R.id.btn_exit)?.setOnClickListener {
+            it.startAnimation(scaleAnimation)
             dialog.dismiss()
             navigateToMenu(fragment)
         }
