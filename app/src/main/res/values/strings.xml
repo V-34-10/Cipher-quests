@@ -36,4 +36,7 @@
     <string name="reset_message">Reset Balance Score</string>
     <string name="button_next_dialog">button_next_dialog</string>
     <string name="item_find_pair">item_find_pair</string>
+    <string name="failed_dialog">failed_dialog puzzle</string>
+    <string name="dialog_victory">dialog_victory puzzle</string>
+    <string name="dialog_pause">dialog_pause puzzle</string>
 </resources>
