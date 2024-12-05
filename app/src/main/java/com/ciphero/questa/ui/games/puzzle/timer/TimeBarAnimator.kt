@@ -77,16 +77,14 @@ class TimeBarAnimator(
             }
     }
 
-    fun stopTimer(binding: FragmentPuzzleGameBinding) {
+    fun stopTimer(binding: ViewBinding) {
         timer?.cancel()
         valueAnimator?.cancel()
-        resetTimer(binding)
-    }
-
-    private fun resetTimer(binding: FragmentPuzzleGameBinding) {
+        when (binding) {
+            is FragmentPuzzleGameBinding -> resetLineTimer(binding)
+        }
         startTime = 0
         elapsedTime = 0
-        resetLineTimer(binding)
     }
 
     private fun resetLineTimer(binding: FragmentPuzzleGameBinding) {
