@@ -39,10 +39,11 @@ class FindPairGameFragment : Fragment() {
         musicSet = MusicControllerPlayer(requireContext())
         musicSet.apply { playSound(R.raw.music_find_pair, true) }
 
-        gameGovern = ControllerFindPairGame(requireContext(), binding)
+        context?.let { gameGovern = ControllerFindPairGame(binding, this) }
 
         binding.btnPause.setOnClickListener {
             it.startAnimation(scaleAnimation)
+            gameGovern.stopGame()
             startDialogPauseGameFindPair(this, gameGovern)
         }
 
@@ -67,11 +68,11 @@ class FindPairGameFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         musicSet.release()
-        gameGovern.stopGame()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        gameGovern.stopGame()
         _binding = null
     }
 }

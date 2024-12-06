@@ -15,7 +15,7 @@ class ItemManager(private val numPairs: Int) {
         }.shuffled()
 
         return if (images.size > numPairs) {
-            val uniqueImage = images[numPairs] // Get the next available image
+            val uniqueImage = images[numPairs]
             (pairs + FindPair(uniqueImage, id = pairList.size)).shuffled()
         } else {
             pairs

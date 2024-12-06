@@ -20,7 +20,7 @@ class ControllerFindPairGame(
     init {
         itemManager.setupPairItems()
         adapter.setAdapter(itemManager.getPairList())
-        clickHandler.setupClickListener(this)
+        clickHandler.observeClickListener(this)
     }
 
     fun stopGame() {
