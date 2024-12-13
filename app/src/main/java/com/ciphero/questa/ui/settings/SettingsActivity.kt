@@ -1,24 +1,19 @@
 package com.ciphero.questa.ui.settings
 
-import android.content.Context
-import android.content.Intent
-import android.media.AudioManager
 import android.os.Bundle
-import android.view.animation.AnimationUtils
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivitySettingsBinding
 import com.ciphero.questa.ui.menu.MenuActivity
+import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
 import com.ciphero.questa.utils.DecoratorNavigationUI
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.PreferencesManager.resetScoresSettings
 
 class SettingsActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySettingsBinding.inflate(layoutInflater) }
-    private val preferences by lazy { getSharedPreferences("CipherQuestsPref", MODE_PRIVATE) }
-    private val scaleAnimation by lazy { AnimationUtils.loadAnimation(this, R.anim.anim_scale) }
-    private val managerAudioService by lazy { getSystemService(Context.AUDIO_SERVICE) as AudioManager }
     private lateinit var musicSet: MusicControllerPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,48 +25,12 @@ class SettingsActivity : AppCompatActivity() {
         musicSet.apply { playSound(R.raw.music_menu, true) }
 
         binding.buttonResetScore.setOnClickListener {
-            it.startAnimation(scaleAnimation)
-            Toast.makeText(applicationContext, R.string.reset_message, Toast.LENGTH_SHORT)
-                .show()
-            preferences.edit().putString("balanceScores", this.getString(R.string.default_balance))
-                .apply()
+            startAnimateClickButton(it, this)
+            Toast.makeText(applicationContext, R.string.reset_message, Toast.LENGTH_SHORT).show()
+            resetScoresSettings(this)
         }
 
-        setVolumeControl()
-    }
-
-    private fun setVolumeControl() {
-        val maxVolumeSYSTEM = managerAudioService.getStreamMaxVolume(AudioManager.STREAM_SYSTEM)
-        binding.seekBarSounds.max = maxVolumeSYSTEM
-        binding.seekBarSounds.progress =
-            managerAudioService.getStreamVolume(AudioManager.STREAM_SYSTEM)
-
-        binding.seekBarSounds.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    managerAudioService.setStreamVolume(AudioManager.STREAM_SYSTEM, progress, 0)
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
-
-        val maxVolumeMUSIC = managerAudioService.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        binding.seekBarMusic.max = maxVolumeMUSIC
-        binding.seekBarMusic.progress =
-            managerAudioService.getStreamVolume(AudioManager.STREAM_MUSIC)
-
-        binding.seekBarMusic.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    managerAudioService.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0)
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
+        musicSet.observeVolumeControl(binding, this)
     }
 
     override fun onDestroy() {
@@ -89,13 +48,10 @@ class SettingsActivity : AppCompatActivity() {
         musicSet.pause()
     }
 
-    @Deprecated(
-        "Deprecated in Java"
-    )
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
-        startActivity(Intent(this, MenuActivity::class.java))
-        finish()
+        navigateToActivity(MenuActivity::class.java, this)
         musicSet.release()
     }
 }
