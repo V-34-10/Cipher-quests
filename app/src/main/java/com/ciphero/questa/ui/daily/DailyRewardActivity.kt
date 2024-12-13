@@ -1,9 +1,7 @@
 package com.ciphero.questa.ui.daily
 
-import android.content.Context
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +9,25 @@ import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityDailyRewardBinding
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.PreferencesManager.getCurrentDayRewarded
+import com.ciphero.questa.utils.PreferencesManager.getLastRewardDay
+import com.ciphero.questa.utils.PreferencesManager.getLastRewardShownDate
+import com.ciphero.questa.utils.PreferencesManager.getRewardCurrentDay
+import com.ciphero.questa.utils.PreferencesManager.getScoresBalance
+import com.ciphero.questa.utils.PreferencesManager.resetRewardProgress
+import com.ciphero.questa.utils.PreferencesManager.setCurrentDayRewarded
+import com.ciphero.questa.utils.PreferencesManager.setLastRewardDay
+import com.ciphero.questa.utils.PreferencesManager.setLastRewardShownDate
+import com.ciphero.questa.utils.PreferencesManager.setRewardCurrentDay
+import com.ciphero.questa.utils.PreferencesManager.setScoresBalance
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class DailyRewardActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDailyRewardBinding.inflate(layoutInflater) }
-    private val preferences by lazy { getSharedPreferences("CipherQuestsPref", Context.MODE_PRIVATE) }
     private val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +37,7 @@ class DailyRewardActivity : AppCompatActivity() {
         DecoratorNavigationUI.hideNavigationBar(this)
 
         if (checkRewardToday()) {
-            intentToMenu()
+            navigateToActivity(MenuActivity::class.java, this)
             return
         }
 
@@ -38,10 +48,11 @@ class DailyRewardActivity : AppCompatActivity() {
 
     private fun dailyClickDaysButtons() {
         binding.buttonClaimDaily.setOnClickListener {
-            val currentDay = preferences.getInt("currentDay", 1)
-            if (currentDay in 1..3 && !preferences.getBoolean("day${currentDay}Rewarded", false)) {
-                collectReward(currentDay, getButtonByDay(currentDay))
-            }
+            val currentDay = getRewardCurrentDay(this)
+            if (currentDay in 1..3 && !getCurrentDayRewarded(this, currentDay)) collectReward(
+                currentDay,
+                getButtonByDay(currentDay)
+            )
         }
     }
 
@@ -54,51 +65,27 @@ class DailyRewardActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkRewardToday(): Boolean =
-        preferences.getString("lastRewardShownDate", null) == date.format(Date())
+    private fun checkRewardToday(): Boolean = getLastRewardShownDate(this) == date.format(Date())
 
-    private fun markRewardShownToday() {
-        with(preferences.edit()) {
-            putString(
-                "lastRewardShownDate",
-                date.format(Date())
-            )
-            apply()
-        }
-    }
+    private fun markRewardShownToday() = setLastRewardShownDate(this, date)
 
     private fun checkDailyReward() {
-        val lastRewardDay = preferences.getString("lastRewardDay", null)
+        val lastRewardDay = getLastRewardDay(this)
         val currentDate = date.format(Date())
 
         if (lastRewardDay == null || lastRewardDay != currentDate) {
-            val currentDay = preferences.getInt("currentDay", 1)
-            if (currentDay > 3) {
-                resetRewardProgress()
+            if (getRewardCurrentDay(this) > 3) {
+                resetRewardProgress(this, date)
             } else {
-                with(preferences.edit()) {
-                    putString("lastRewardDay", currentDate)
-                    apply()
-                }
+                setLastRewardDay(this, currentDate)
             }
         }
     }
 
-    private fun resetRewardProgress() {
-        with(preferences.edit()) {
-            putInt("currentDay", 1)
-            putString("lastRewardDay", date.format(Date()))
-            putBoolean("day1Rewarded", false)
-            putBoolean("day2Rewarded", false)
-            putBoolean("day3Rewarded", false)
-            commit()
-        }
-    }
-
     private fun loadRewardProgress() {
-        val currentDay = preferences.getInt("currentDay", 1)
+        val currentDay = getRewardCurrentDay(this)
         if (currentDay > 3) {
-            resetRewardProgress()
+            resetRewardProgress(this, date)
         } else {
             updateRewardUI(currentDay)
         }
@@ -110,11 +97,12 @@ class DailyRewardActivity : AppCompatActivity() {
         updateButtonState(binding.btnThreeDay, 3, currentDay)
     }
 
+    @SuppressLint("TimberArgCount")
     private fun updateButtonState(button: View, day: Int, currentDay: Int) {
-        val isRewarded = preferences.getBoolean("day${day}Rewarded", false)
+        val isRewarded = getCurrentDayRewarded(this, day)
         button.isEnabled = day == currentDay && !isRewarded
         button.alpha = if (day <= currentDay) 1f else 0.5f
-        Log.d("DailyActivity", "Day $day isRewarded: $isRewarded")
+        Timber.tag("DailyActivity").d("%s%s", "%s isRewarded: ", "Day %s", day, isRewarded)
         if (isRewarded) {
             when (day) {
                 1 -> button.setBackgroundResource(R.drawable.basic_day_1_done)
@@ -138,40 +126,23 @@ class DailyRewardActivity : AppCompatActivity() {
             else -> 0
         }
 
-        val currentBalance = preferences.getString(
-            "balanceScores",
-            this.getString(R.string.default_balance)
-        )
-        var balance = currentBalance.toString().filter { it.isDigit() }.toIntOrNull() ?: 0
+        var balance = getScoresBalance(this).toString().filter { it.isDigit() }.toIntOrNull() ?: 0
         balance += rewardAmount
-        with(preferences.edit()) {
-            putString("balanceScores", balance.toString())
-            putBoolean("day${day}Rewarded", true)
-            apply()
-        }
+
+        setScoresBalance(this, balance.toString())
+        setCurrentDayRewarded(this, day)
         markRewardShownToday()
         updateButtonState(button, day, day)
 
         val nextDay = day + 1
         if (nextDay <= 3) {
-            with(preferences.edit()) {
-                putInt("currentDay", nextDay)
-                apply()
-            }
+            setRewardCurrentDay(this, nextDay)
         } else {
-            with(preferences.edit()) {
-                putInt("currentDay", 1)
-                apply()
-            }
-            resetRewardProgress()
+            setRewardCurrentDay(this, 1)
+            resetRewardProgress(this, date)
         }
 
-        intentToMenu()
-    }
-
-    private fun intentToMenu() {
-        startActivity(Intent(this, MenuActivity::class.java))
-        finish()
+        navigateToActivity(MenuActivity::class.java, this)
     }
 
     @Deprecated(
@@ -180,6 +151,6 @@ class DailyRewardActivity : AppCompatActivity() {
     )
     override fun onBackPressed() {
         super.onBackPressed()
-        intentToMenu()
+        navigateToActivity(MenuActivity::class.java, this)
     }
 }
