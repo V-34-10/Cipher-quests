@@ -1,6 +1,5 @@
 package com.ciphero.questa.ui.games
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,26 +13,18 @@ import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 import com.ciphero.questa.ui.games.quiz.QuizGameFragment
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.PreferencesManager.getNameGameMenu
 
 class SceneBasicActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySceneBasicBinding.inflate(layoutInflater) }
-    private val preferences by lazy { getSharedPreferences("CipherQuestsPref", MODE_PRIVATE) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
-        setFragmentGames()
+        setFragmentGame(createFragmentForGame(getNameGameMenu(this)), R.id.container_games)
     }
-
-    private fun setFragmentGames() = replaceFragmentGame(
-        createFragmentForGame(
-            preferences.getString(
-                "nameGame",
-                getString(R.string.first_game_btn)
-            )
-        ), R.id.container_games
-    )
 
     private fun createFragmentForGame(theme: String?): Fragment {
         return when (theme) {
@@ -43,7 +34,7 @@ class SceneBasicActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragmentGame(fragment: Fragment, containerId: Int) {
+    private fun setFragmentGame(fragment: Fragment, containerId: Int) {
         supportFragmentManager.commit {
             replace(containerId, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -53,7 +44,7 @@ class SceneBasicActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
-        if (!checkBackStack()) startToMenu()
+        if (!checkBackStack()) navigateToActivity(MenuActivity::class.java, this)
     }
 
     private fun checkBackStack(): Boolean {
@@ -61,10 +52,5 @@ class SceneBasicActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
             true
         } else false
-    }
-
-    private fun startToMenu() {
-        startActivity(Intent(this, MenuActivity::class.java))
-        finish()
     }
 }
