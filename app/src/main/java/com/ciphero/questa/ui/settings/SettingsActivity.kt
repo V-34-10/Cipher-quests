@@ -14,14 +14,12 @@ import com.ciphero.questa.utils.PreferencesManager.resetScoresSettings
 
 class SettingsActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySettingsBinding.inflate(layoutInflater) }
-    private lateinit var musicSet: MusicControllerPlayer
+    private val musicSet by lazy { MusicControllerPlayer(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
-
-        musicSet = MusicControllerPlayer(this)
         musicSet.apply { playSound(R.raw.music_menu, true) }
 
         binding.buttonResetScore.setOnClickListener {
@@ -29,7 +27,6 @@ class SettingsActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, R.string.reset_message, Toast.LENGTH_SHORT).show()
             resetScoresSettings(this)
         }
-
         musicSet.observeVolumeControl(binding, this)
     }
 
@@ -52,6 +49,5 @@ class SettingsActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         navigateToActivity(MenuActivity::class.java, this)
-        musicSet.release()
     }
 }
