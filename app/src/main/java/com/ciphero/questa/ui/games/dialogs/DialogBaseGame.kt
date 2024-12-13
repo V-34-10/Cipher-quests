@@ -2,7 +2,6 @@ package com.ciphero.questa.ui.games.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.view.View
@@ -10,12 +9,12 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle.restartRound
-import com.ciphero.questa.ui.menu.MenuActivity
+import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToWithFragment
 
 object DialogsBaseGame {
 
@@ -54,22 +53,16 @@ object DialogsBaseGame {
         layoutResId: Int,
         onDismiss: () -> Unit
     ) {
-        val scaleAnimation by lazy {
-            AnimationUtils.loadAnimation(
-                fragment.requireContext(),
-                R.anim.anim_scale
-            )
-        }
         val dialog = createDialog(fragment.requireContext(), layoutResId)
         dialog.findViewById<View>(R.id.btn_next)?.setOnClickListener {
-            it.startAnimation(scaleAnimation)
+            startAnimateClickButton(it, fragment.requireContext())
             dialog.dismiss()
             onDismiss()
         }
         dialog.findViewById<View>(R.id.btn_exit)?.setOnClickListener {
-            it.startAnimation(scaleAnimation)
+            startAnimateClickButton(it, fragment.requireContext())
             dialog.dismiss()
-            navigateToMenu(fragment)
+            navigateToWithFragment(fragment)
         }
         dialog.show()
     }
@@ -100,10 +93,4 @@ object DialogsBaseGame {
     fun startDialogVictoryGamePuzzle(fragment: Fragment) = showDialog(
         fragment, R.layout.dialog_game_victory
     ) { restartRound() }
-
-    private fun navigateToMenu(fragment: Fragment) {
-        val intent = Intent(fragment.requireContext(), MenuActivity::class.java)
-        fragment.startActivity(intent)
-        fragment.requireActivity().finish()
-    }
 }
