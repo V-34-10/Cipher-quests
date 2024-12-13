@@ -1,11 +1,9 @@
 package com.ciphero.questa.ui.games.findpair
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.FragmentFindPairGameBinding
@@ -13,18 +11,14 @@ import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGameF
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.settings.MusicSoundPlayer
+import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
 
 class FindPairGameFragment : Fragment() {
     private var _binding: FragmentFindPairGameBinding? = null
     private val binding get() = _binding!!
-    private val scaleAnimation by lazy {
-        AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.anim_scale
-        )
-    }
-    private lateinit var gameGovern: ControllerFindPairGame
-    private lateinit var musicSet: MusicSoundPlayer
+    private val gameGovern by lazy { ControllerFindPairGame(binding, this) }
+    private val musicSet by lazy { MusicSoundPlayer(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,23 +29,17 @@ class FindPairGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        musicSet = MusicSoundPlayer(requireContext())
         musicSet.apply { playSound(R.raw.music_find_pair, true) }
-
-        context?.let { gameGovern = ControllerFindPairGame(binding, this) }
-
         binding.btnPause.setOnClickListener {
-            it.startAnimation(scaleAnimation)
+            startAnimateClickButton(it, requireContext())
             gameGovern.stopGame()
             startDialogPauseGameFindPair(this, gameGovern)
         }
 
         binding.btnBack.setOnClickListener {
-            it.startAnimation(scaleAnimation)
+            startAnimateClickButton(it, requireContext())
             gameGovern.stopGame()
-            startActivity(Intent(requireContext(), MenuActivity::class.java))
-            activity?.finish()
+            navigateToActivity(MenuActivity::class.java, requireActivity())
         }
     }
 
