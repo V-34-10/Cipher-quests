@@ -8,6 +8,7 @@ import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGameFindPair
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogLoseGamePuzzle
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
+import com.ciphero.questa.utils.AnimatorManager.resetLineTimer
 
 class TimeBarAnimator(
     private val gameManager: ControllerFindPairGame?,
@@ -85,12 +86,5 @@ class TimeBarAnimator(
         }
         startTime = 0
         elapsedTime = 0
-    }
-
-    private fun resetLineTimer(binding: FragmentPuzzleGameBinding) {
-        val defaultWidth = (150 * binding.root.context.resources.displayMetrics.density).toInt()
-        val layoutParams = binding.timerProgressBar.lineTimer.layoutParams
-        layoutParams.width = defaultWidth
-        binding.timerProgressBar.lineTimer.layoutParams = layoutParams
     }
 }
