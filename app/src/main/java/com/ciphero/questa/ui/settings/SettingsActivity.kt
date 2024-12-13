@@ -14,7 +14,7 @@ import com.ciphero.questa.utils.PreferencesManager.resetScoresSettings
 
 class SettingsActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySettingsBinding.inflate(layoutInflater) }
-    private val musicSet by lazy { MusicControllerPlayer(this) }
+    private val musicSet by lazy { MusicSoundPlayer(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

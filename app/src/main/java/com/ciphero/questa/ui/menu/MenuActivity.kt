@@ -8,7 +8,7 @@ import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityMenuBinding
 import com.ciphero.questa.ui.games.SceneBasicActivity
 import com.ciphero.questa.ui.privacy.PrivacyActivity
-import com.ciphero.questa.ui.settings.MusicControllerPlayer
+import com.ciphero.questa.ui.settings.MusicSoundPlayer
 import com.ciphero.questa.ui.settings.SettingsActivity
 import com.ciphero.questa.utils.AnimatorManager.setAnimateClickButton
 import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
@@ -19,7 +19,7 @@ import kotlin.system.exitProcess
 
 class MenuActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMenuBinding.inflate(layoutInflater) }
-    private val musicSet by lazy { MusicControllerPlayer(this) }
+    private val musicSet by lazy { MusicSoundPlayer(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

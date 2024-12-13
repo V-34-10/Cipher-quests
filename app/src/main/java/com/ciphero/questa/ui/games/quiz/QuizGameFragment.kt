@@ -16,13 +16,13 @@ import com.ciphero.questa.databinding.FragmentQuizGameBinding
 import com.ciphero.questa.model.CasinoQuizQuestions
 import com.ciphero.questa.model.Question
 import com.ciphero.questa.ui.menu.MenuActivity
-import com.ciphero.questa.ui.settings.MusicControllerPlayer
+import com.ciphero.questa.ui.settings.MusicSoundPlayer
 
 class QuizGameFragment : Fragment() {
     private var _binding: FragmentQuizGameBinding? = null
     private val binding get() = _binding!!
     private var currentQuestion: Question? = null
-    private lateinit var musicSet: MusicControllerPlayer
+    private lateinit var musicSet: MusicSoundPlayer
     private val scaleAnimation by lazy {
         AnimationUtils.loadAnimation(
             requireContext(),
@@ -44,7 +44,7 @@ class QuizGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        musicSet = MusicControllerPlayer(requireContext())
+        musicSet = MusicSoundPlayer(requireContext())
         musicSet.apply { playSound(R.raw.music_quiz, true) }
 
         showNextQuestion()

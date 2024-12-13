@@ -12,7 +12,7 @@ import com.ciphero.questa.databinding.FragmentFindPairGameBinding
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGameFindPair
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.menu.MenuActivity
-import com.ciphero.questa.ui.settings.MusicControllerPlayer
+import com.ciphero.questa.ui.settings.MusicSoundPlayer
 
 class FindPairGameFragment : Fragment() {
     private var _binding: FragmentFindPairGameBinding? = null
@@ -24,7 +24,7 @@ class FindPairGameFragment : Fragment() {
         )
     }
     private lateinit var gameGovern: ControllerFindPairGame
-    private lateinit var musicSet: MusicControllerPlayer
+    private lateinit var musicSet: MusicSoundPlayer
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +36,7 @@ class FindPairGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        musicSet = MusicControllerPlayer(requireContext())
+        musicSet = MusicSoundPlayer(requireContext())
         musicSet.apply { playSound(R.raw.music_find_pair, true) }
 
         context?.let { gameGovern = ControllerFindPairGame(binding, this) }
