@@ -54,4 +54,7 @@ dependencies {
     implementation(libs.exoplayer)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    //Timber
+    implementation(libs.timber)
 }
