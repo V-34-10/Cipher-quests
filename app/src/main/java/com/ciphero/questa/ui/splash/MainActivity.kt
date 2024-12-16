@@ -1,66 +1,77 @@
 package com.ciphero.questa.ui.splash
 
-import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ciphero.questa.databinding.ActivityMainBinding
-import com.ciphero.questa.ui.daily.DailyRewardActivity
-import com.ciphero.questa.ui.privacy.PrivacyActivity
+import com.ciphero.questa.model.Offerwall
+import com.ciphero.questa.ui.menu.MenuActivity
+import com.ciphero.questa.utils.AnimatorManager.setAnimateLoadingInSplash
 import com.ciphero.questa.utils.DecoratorNavigationUI
+import com.ciphero.questa.utils.DecoratorNavigationUI.observeStartActivityInSplash
 import com.ciphero.questa.utils.NetworkCheck
+import com.ciphero.questa.utils.PreferencesManager.setStatusOfferwall
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
+    private val initOfferWall by lazy { OfferwallRunResponse(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
         if (NetworkCheck.checkAccessInternet(this)) {
-            /*animationLoading(15000L)
+            setAnimateLoadingInSplash(15000L, this@MainActivity, binding)
             lifecycleScope.launch {
-                delay(3000L)
-                loadingOfferWall()
-            }*/
-            checkNavigateToPrivacyOrDaily()
+                responseGetBestOffers()
+            }
+            observeStartActivityInSplash(this)
         } else {
-            animProgressBar(3000L)
+            setAnimateLoadingInSplash(3000L, this@MainActivity, binding)
             lifecycleScope.launch {
                 delay(3000L)
-                checkNavigateToPrivacyOrDaily()
+                observeStartActivityInSplash(this@MainActivity)
+                finish()
             }
         }
     }
 
-    private fun animProgressBar(duration: Long) {
-        val animator =
-            ValueAnimator.ofInt(10, (350 * resources.displayMetrics.density).toInt() - 10).apply {
-                this.duration = duration
-                addUpdateListener {
-                    binding.barLoad.LineBar.layoutParams.width = it.animatedValue as Int
-                    binding.barLoad.LineBar.layoutParams = binding.barLoad.LineBar.layoutParams
-                }
-            }
+    @SuppressLint("BinaryOperationInTimber")
+    private fun responseGetBestOffers() {
+        lifecycleScope.launch {
+            val offers = initOfferWall.getOffers()
 
-        animator.start()
+            if (offers.isNotEmpty()) {
+                handleOffersAvailable(offers)
+            } else {
+                handleNoOffers()
+            }
+        }
     }
 
-    private fun checkNavigateToPrivacyOrDaily() {
-        val navigateActivity = when {
-            privacyAccepted() -> DailyRewardActivity::class.java
-            else -> PrivacyActivity::class.java
+    private fun handleOffersAvailable(offers: List<Offerwall>) {
+        setStatusOfferwall(this, true)
+        val intent = Intent(this, MenuActivity::class.java).apply {
+            putParcelableArrayListExtra("listBestOffers", ArrayList(offers))
         }
-        startActivity(Intent(this, navigateActivity))
+        startActivity(intent)
+        Timber.tag("OfferwallRunResponse").d("Parse Response: %s", offers)
         finish()
     }
 
-    private fun privacyAccepted(): Boolean = getSharedPreferences("CipherQuestsPref", MODE_PRIVATE).getBoolean("Privacy", false)
+    private fun handleNoOffers() {
+        setStatusOfferwall(this, false)
+        lifecycleScope.launch {
+            observeStartActivityInSplash(this@MainActivity)
+        }
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
