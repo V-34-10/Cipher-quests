@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.ciphero.questa.R
 import com.ciphero.questa.ui.daily.DailyRewardActivity
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.privacy.PrivacyActivity
@@ -48,5 +47,5 @@ object DecoratorNavigationUI {
         fragment.requireActivity().finish()
     }
 
-    fun navigateToPrivacyLink(context: Context) = context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_privacy))))
+    fun navigateToLink(context: Context, link: String) = context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 }

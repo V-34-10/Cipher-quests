@@ -3,12 +3,13 @@ package com.ciphero.questa.ui.privacy
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityPrivacyBinding
 import com.ciphero.questa.ui.daily.DailyRewardActivity
 import com.ciphero.questa.utils.AnimatorManager.setAnimateClickButton
 import com.ciphero.questa.utils.DecoratorNavigationUI
 import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
-import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToPrivacyLink
+import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToLink
 import com.ciphero.questa.utils.PreferencesManager.setPrivacyAccepted
 
 class PrivacyActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class PrivacyActivity : AppCompatActivity() {
             }, this)
         }
         binding.textRead.setOnClickListener {
-            setAnimateClickButton(it, { navigateToPrivacyLink(this) }, this)
+            setAnimateClickButton(it, { navigateToLink(this, getString(R.string.link_privacy)) }, this)
         }
     }
 
