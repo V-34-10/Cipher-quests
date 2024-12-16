@@ -39,4 +39,15 @@
     <string name="failed_dialog">failed_dialog puzzle</string>
     <string name="dialog_victory">dialog_victory puzzle</string>
     <string name="dialog_pause">dialog_pause puzzle</string>
+
+    <string name="app_name_pref">CipherQuestsPref</string>
+    <string name="key_privacy_pref">Privacy</string>
+    <string name="key_name_game_pref">nameGame</string>
+    <string name="key_balance_scores_pref">balanceScores</string>
+
+    <string name="link_response_offerwall">zabuzasloz.com/games</string>
+    <string name="start">Грати</string>
+    <string name="title_offers">Best Offers</string>
+    <string name="background_game">background_menu</string>
+
 </resources>

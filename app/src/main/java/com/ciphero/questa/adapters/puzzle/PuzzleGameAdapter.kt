@@ -13,6 +13,7 @@ import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogVictoryGam
 import com.ciphero.questa.ui.games.puzzle.PuzzleGameFragment
 import com.ciphero.questa.ui.games.puzzle.image.GeneratorPuzzleImage
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
+import com.ciphero.questa.utils.AnimatorManager.animatedPuzzle
 import java.util.Collections
 import kotlin.math.abs
 
@@ -121,11 +122,5 @@ class PuzzleGameAdapter(
         Collections.swap(cardList, fromPosition, toPosition)
         cardList[fromPosition].id = fromPosition
         cardList[toPosition].id = toPosition
-    }
-
-    fun animatedPuzzle(view: View) {
-        view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction {
-            view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start()
-        }.start()
     }
 }
