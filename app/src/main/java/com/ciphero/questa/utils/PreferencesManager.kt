@@ -46,6 +46,15 @@ object PreferencesManager {
                 ).apply()
             }
 
+    fun setNameGameMenu(context: Context, gameNameResId: String) =
+        context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE)
+            .edit {
+                putString(
+                    context.getString(R.string.key_name_game_pref),
+                    gameNameResId
+                ).apply()
+            }
+
     fun getNameGameMenu(context: Context) =
         context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE)
             .getString(
@@ -100,4 +109,13 @@ object PreferencesManager {
     fun setCurrentDayRewarded(context: Context, currentDay: Int) =
         context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE).edit()
             .putBoolean("day${currentDay}Rewarded", true).apply()
+
+
+    fun setStatusOfferwall(context: Context, status: Boolean) =
+        context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE).edit()
+            .putBoolean("StatusOffer", status).apply()
+
+    fun getStatusOfferwall(context: Context) =
+        context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE)
+            .getBoolean("StatusOffer", false)
 }
