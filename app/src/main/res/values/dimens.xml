@@ -7,4 +7,5 @@
     <dimen name="dp30">30dp</dimen>
     <dimen name="dp10">10dp</dimen>
     <dimen name="sp23">23sp</dimen>
+    <dimen name="sp45">45sp</dimen>
 </resources>
