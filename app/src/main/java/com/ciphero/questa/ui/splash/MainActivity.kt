@@ -3,7 +3,6 @@ package com.ciphero.questa.ui.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,7 @@ import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.utils.AnimatorManager.setAnimateLoadingInSplash
 import com.ciphero.questa.utils.DecoratorNavigationUI
 import com.ciphero.questa.utils.DecoratorNavigationUI.observeStartActivityInSplash
-import com.ciphero.questa.utils.NetworkCheck
+import com.ciphero.questa.utils.EthernetManager
 import com.ciphero.questa.utils.PreferencesManager.setStatusOfferwall
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,12 +26,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
-        if (NetworkCheck.checkAccessInternet(this)) {
+        if (EthernetManager.checkAccessInternet(this)) {
             setAnimateLoadingInSplash(15000L, this@MainActivity, binding)
             lifecycleScope.launch {
                 responseGetBestOffers()
             }
-            observeStartActivityInSplash(this)
         } else {
             setAnimateLoadingInSplash(3000L, this@MainActivity, binding)
             lifecycleScope.launch {
@@ -70,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         setStatusOfferwall(this, false)
         lifecycleScope.launch {
             observeStartActivityInSplash(this@MainActivity)
+            finish()
         }
     }
 
