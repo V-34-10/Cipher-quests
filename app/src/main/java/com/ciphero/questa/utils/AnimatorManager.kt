@@ -21,7 +21,7 @@ object AnimatorManager {
         context: Context,
         binding: ActivityMainBinding
     ) =
-        ValueAnimator.ofInt(10, (350 * context.resources.displayMetrics.density).toInt() - 10)
+        ValueAnimator.ofInt(10, (350 * context.resources.displayMetrics.density).toInt() - 30)
             .apply {
                 this.duration = duration
                 addUpdateListener {
