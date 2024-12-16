@@ -14,6 +14,11 @@ navigation-fragment = "2.8.4"
 lifecycleRuntimeKtx = "2.8.7"
 kotlinxCoroutinesAndroid = "1.7.3"
 timber = "5.0.1"
+okhttp = "4.9.1"
+okhttp3Integration = "4.12.0"
+glide = "4.14.2"
+gson = "2.10.1"
+kotlinxSerializationJson = "1.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +35,12 @@ androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp3-integration = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "okhttp3Integration" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "okhttp3Integration" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

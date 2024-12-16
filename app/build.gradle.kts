@@ -57,4 +57,16 @@ dependencies {
 
     //Timber
     implementation(libs.timber)
+
+    // Okhttp3
+    implementation(libs.okhttp)
+    implementation(libs.okhttp3.integration)
+
+    // JSON
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.gson)
+
+    // Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 }
