@@ -16,13 +16,6 @@ object PreferencesManager {
         context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE)
             .edit { putBoolean(context.getString(R.string.key_privacy_pref), true).apply() }
 
-    fun resetScoresSettings(context: Context) =
-        context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE).edit()
-            .putString(
-                context.getString(R.string.key_balance_scores_pref),
-                context.getString(R.string.default_balance)
-            ).apply()
-
     fun setScoresBalance(context: Context, balance: String) =
         context.getSharedPreferences(context.getString(R.string.app_name_pref), MODE_PRIVATE).edit()
             .putString(
