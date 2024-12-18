@@ -3,7 +3,9 @@ package com.ciphero.questa.utils
 import android.animation.ValueAnimator
 import android.content.Context
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.ActivityMainBinding
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
@@ -53,9 +55,18 @@ object AnimatorManager {
         binding.timerProgressBar.lineTimer.layoutParams = layoutParams
     }
 
-    fun animatedPuzzle(view: View) {
-        view.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100).withEndAction {
-            view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start()
-        }.start()
+    private val scaleUpAnimation by lazy {
+        ScaleAnimation(
+            1f, 1.2f,
+            1f, 1.2f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        ).apply {
+            duration = 100
+            repeatMode = Animation.REVERSE
+            repeatCount = 1
+        }
     }
+
+    fun animatedPuzzle(view: View) = view.startAnimation(scaleUpAnimation)
 }
