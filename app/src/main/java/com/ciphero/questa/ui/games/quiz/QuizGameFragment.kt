@@ -13,6 +13,7 @@ import com.ciphero.questa.R
 import com.ciphero.questa.databinding.FragmentQuizGameBinding
 import com.ciphero.questa.model.CasinoQuizQuestions
 import com.ciphero.questa.model.Question
+import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame
 import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.settings.MusicSoundPlayer
 import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
@@ -30,6 +31,10 @@ class QuizGameFragment : Fragment() {
             binding.btnThreeAnswer
         )
     }
+    private var questionCount = 0
+    private var correctAnswers = 0
+    private var incorrectAnswers = 0
+    private val totalQuestions = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +59,7 @@ class QuizGameFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             startAnimateClickButton(it, requireContext())
             resetAnswerButtonBackgrounds()
+            binding.btnNext.isEnabled = false
             binding.btnNext.visibility = View.GONE
             showNextQuestion()
         }
@@ -67,17 +73,28 @@ class QuizGameFragment : Fragment() {
         answerButtons.forEach { it.setBackgroundResource(R.drawable.background_basic_answer) }
 
     private fun disableAnswerButtons() = answerButtons.forEach { it.isEnabled = false }
+    private fun enableAnswerButtons() = answerButtons.forEach { it.isEnabled = true }
 
     private fun showNextQuestion() {
-        currentQuestion = CasinoQuizQuestions.questions.random()
-        binding.textQuestion.text = currentQuestion?.text
+        if (questionCount < totalQuestions) {
+            questionCount++
+            currentQuestion = CasinoQuizQuestions.questions.random()
+            binding.textQuestion.text = currentQuestion?.text
 
-        val answers = currentQuestion?.answers?.shuffled() ?: emptyList()
-        answerButtons.forEachIndexed { index, button ->
-            button.text = answers.getOrNull(index)
-            button.isEnabled = true
+            val answers = currentQuestion?.answers?.shuffled() ?: emptyList()
+            answerButtons.forEachIndexed { index, button ->
+                button.text = answers.getOrNull(index)
+                button.isEnabled = true
+            }
+
+            updateStatusText()
+        } else {
+            DialogsBaseGame.startDialogLoseGameQuiz(this) { resetGame() }
         }
-        binding.btnNext.visibility = View.GONE
+    }
+
+    private fun updateStatusText() {
+        binding.textStatus.text = getString(R.string.question_status, questionCount, totalQuestions)
     }
 
     private fun checkAnswer(button: TextView) {
@@ -94,9 +111,37 @@ class QuizGameFragment : Fragment() {
                 val backgroundDrawable =
                     if (isCorrect) R.drawable.background_correct_answer else R.drawable.background_nocorrect_answer
                 button.setBackgroundResource(backgroundDrawable)
-                binding.btnNext.visibility = View.VISIBLE
+
             }
         })
+
+        if (isCorrect) {
+            correctAnswers++
+        } else {
+            incorrectAnswers++
+            if (incorrectAnswers >= 3) {
+                DialogsBaseGame.startDialogLoseGameQuiz(this) { resetGame() }
+            }
+        }
+
+        if (questionCount == totalQuestions && incorrectAnswers < 3) {
+            DialogsBaseGame.startDialogVictoryGameQuiz(this) { resetGame() }
+        } else {
+            binding.btnNext.visibility = View.VISIBLE
+            binding.btnNext.isEnabled = true
+        }
+    }
+
+    private fun resetGame() {
+        questionCount = 0
+        correctAnswers = 0
+        incorrectAnswers = 0
+        binding.btnNext.isEnabled = false
+        binding.btnNext.visibility = View.GONE
+        showNextQuestion()
+        resetAnswerButtonBackgrounds()
+        enableAnswerButtons()
+        musicSet.resume()
     }
 
     override fun onDestroy() {
