@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
 import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle.restartRound
-import com.ciphero.questa.ui.games.quiz.QuizGameFragment
 import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
 import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToWithFragment
 
@@ -95,7 +94,9 @@ object DialogsBaseGame {
         fragment, R.layout.dialog_game_victory
     ) { restartRound() }
 
-    fun startDialogLoseGameQuiz(fragment: Fragment, onDismiss: () -> Unit) = showDialog(fragment, R.layout.dialog_game_find_pair_lose, onDismiss)
+    fun startDialogLoseGameQuiz(fragment: Fragment, onDismiss: () -> Unit) =
+        showDialog(fragment, R.layout.dialog_game_find_pair_lose, onDismiss)
 
-    fun startDialogVictoryGameQuiz(fragment: Fragment, onDismiss: () -> Unit) = showDialog(fragment, R.layout.dialog_game_find_pair_victory, onDismiss)
+    fun startDialogVictoryGameQuiz(fragment: Fragment, onDismiss: () -> Unit) =
+        showDialog(fragment, R.layout.dialog_game_find_pair_victory, onDismiss)
 }
