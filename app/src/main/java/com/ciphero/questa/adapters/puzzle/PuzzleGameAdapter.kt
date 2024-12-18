@@ -106,7 +106,7 @@ class PuzzleGameAdapter(
         notifyItemChanged(fromPosition)
         notifyItemChanged(toPosition)
 
-        if (checkCard(cardList, winListPuzzle)) startDialogVictoryGamePuzzle(fragment = PuzzleGameFragment())
+        if (checkCard(cardList, winListPuzzle)) startDialogVictoryGamePuzzle(fragment)
     }
 
     fun canMoveStepGame(clickedPosition: Int, emptyPosition: Int, gridSize: Int): Boolean {
