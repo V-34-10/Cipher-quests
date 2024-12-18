@@ -17,7 +17,7 @@ class TimeBarAnimator(
     private var timer: CountDownTimer? = null
     private var startTime = 0L
     private var elapsedTime = 0L
-    private val animationDuration = 30_000L
+    private val animationDuration = 60_000L
     private var initialWidth = 0
     private var fragment: Fragment? = null
     private var valueAnimator: ValueAnimator? = null
