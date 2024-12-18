@@ -55,7 +55,8 @@ class MenuActivity : AppCompatActivity() {
 
     private fun setModeGame() {
         val listGamesOffer =
-            intent.getParcelableArrayListExtra<Offerwall>("listBestOffers") ?: emptyList()
+            intent.getParcelableArrayListExtra<Offerwall>(this.getString(R.string.key_list_best_offers_extra))
+                ?: emptyList()
         when {
             shouldEnableWorkMode(listGamesOffer) -> switchMode.setWorkMode(listGamesOffer)
             shouldEnableDemoMode(listGamesOffer) -> switchMode.setDemoMode(listGamesOffer)
@@ -66,7 +67,7 @@ class MenuActivity : AppCompatActivity() {
     private fun shouldEnableWorkMode(listGamesOffer: List<Offerwall>): Boolean =
         getStatusOfferwall(this) &&
                 listGamesOffer.isNotEmpty() &&
-                listGamesOffer.any { it.title.startsWith("https://") }
+                listGamesOffer.any { it.title.startsWith(this.getString(R.string.prefix_link)) }
 
     private fun shouldEnableDemoMode(listGamesOffer: List<Offerwall>): Boolean =
         getStatusOfferwall(this) && listGamesOffer.isNotEmpty()

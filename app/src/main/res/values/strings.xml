@@ -58,5 +58,7 @@
     <string name="key_day3_rewarded_pref">day3Rewarded</string>
     <string name="key_day2_rewarded_pref">day2Rewarded</string>
     <string name="key_status_offer_pref">StatusOffer</string>
+    <string name="prefix_link">https://</string>
+    <string name="key_list_best_offers_extra">listBestOffers</string>
 
 </resources>
