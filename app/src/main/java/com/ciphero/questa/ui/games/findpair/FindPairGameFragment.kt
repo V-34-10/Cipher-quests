@@ -17,13 +17,14 @@ import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
 class FindPairGameFragment : Fragment() {
     private var _binding: FragmentFindPairGameBinding? = null
     private val binding get() = _binding!!
-    private val gameGovern by lazy { ControllerFindPairGame(binding, this) }
+    private lateinit var gameGovern: ControllerFindPairGame
     private val musicSet by lazy { MusicSoundPlayer(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFindPairGameBinding.inflate(inflater, container, false)
+        gameGovern = ControllerFindPairGame(binding, this)
         return binding.root
     }
 
