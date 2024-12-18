@@ -26,20 +26,17 @@ class SceneBasicActivity : AppCompatActivity() {
         setFragmentGame(createFragmentForGame(getNameGameMenu(this)), R.id.container_games)
     }
 
-    private fun createFragmentForGame(theme: String?): Fragment {
-        return when (theme) {
-            getString(R.string.second_game_btn) -> PuzzleGameFragment()
-            getString(R.string.three_game_btn) -> FindPairGameFragment()
-            else -> QuizGameFragment()
-        }
+    private fun createFragmentForGame(theme: String?): Fragment = when (theme) {
+        getString(R.string.second_game_btn) -> PuzzleGameFragment()
+        getString(R.string.three_game_btn) -> FindPairGameFragment()
+        else -> QuizGameFragment()
     }
 
-    private fun setFragmentGame(fragment: Fragment, containerId: Int) {
+    private fun setFragmentGame(fragment: Fragment, containerId: Int) =
         supportFragmentManager.commit {
             replace(containerId, fragment)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         }
-    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
