@@ -5,15 +5,18 @@ import android.content.Context
 import com.ciphero.questa.R
 import com.ciphero.questa.model.Puzzle
 
-class GeneratorPuzzleImage(private val context: Context) {
-    private fun resIdForName(name: String): Int =
-        context.resources.getIdentifier(name, "drawable", context.packageName)
+class GeneratorPuzzleImage(context: Context) {
+    private val resources = context.resources
+    private val packageName = context.packageName
 
     val gridConfig = GridPuzzle(
-        victoryListPuzzle = List(9) { resIdForName("puzzle$it") },
+        victoryListPuzzle = generatePuzzleResources(),
         spanGrid = 3,
         idEndPuzzle = 8
     )
+
+    private fun generatePuzzleResources(): List<Int> =
+        List(9) { index -> resources.getIdentifier("puzzle$index", "drawable", packageName) }
 
     @SuppressLint("DiscouragedApi")
     fun preparationPuzzles(): MutableList<Puzzle> {
