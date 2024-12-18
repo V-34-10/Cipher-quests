@@ -51,5 +51,12 @@
     <string name="background_game">background_menu</string>
     <string name="text_status">1/10 questions</string>
     <string name="question_status">%1$d/%2$d questions</string>
+    <string name="key_current_day_pref">currentDay</string>
+    <string name="key_last_reward_shown_date_pref">lastRewardShownDate</string>
+    <string name="key_last_reward_day_pref">lastRewardDay</string>
+    <string name="key_day1_rewarded_pref">day1Rewarded</string>
+    <string name="key_day3_rewarded_pref">day3Rewarded</string>
+    <string name="key_day2_rewarded_pref">day2Rewarded</string>
+    <string name="key_status_offer_pref">StatusOffer</string>
 
 </resources>
