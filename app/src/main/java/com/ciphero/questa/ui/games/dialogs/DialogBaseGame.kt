@@ -51,7 +51,7 @@ object DialogsBaseGame {
     private fun showDialog(
         fragment: Fragment,
         layoutResId: Int,
-        onDismiss: () -> Unit
+        onDismiss: () -> Unit?
     ) {
         val dialog = createDialog(fragment.requireContext(), layoutResId)
         dialog.findViewById<View>(R.id.btn_next)?.setOnClickListener {
@@ -93,4 +93,8 @@ object DialogsBaseGame {
     fun startDialogVictoryGamePuzzle(fragment: Fragment) = showDialog(
         fragment, R.layout.dialog_game_victory
     ) { restartRound() }
+
+    fun startDialogLoseGameQuiz(fragment: Fragment) = showDialog(fragment, R.layout.dialog_game_find_pair_lose){}
+
+    fun startDialogVictoryGameQuiz(fragment: Fragment) = showDialog(fragment, R.layout.dialog_game_find_pair_victory){}
 }
