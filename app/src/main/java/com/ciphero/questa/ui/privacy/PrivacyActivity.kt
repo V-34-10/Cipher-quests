@@ -1,6 +1,7 @@
 package com.ciphero.questa.ui.privacy
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.ciphero.questa.R
@@ -10,6 +11,7 @@ import com.ciphero.questa.utils.AnimatorManager.setAnimateClickButton
 import com.ciphero.questa.utils.DecoratorNavigationUI
 import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
 import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToLink
+import com.ciphero.questa.utils.PreferencesManager.checkerPrivacyAccepted
 import com.ciphero.questa.utils.PreferencesManager.setPrivacyAccepted
 
 class PrivacyActivity : AppCompatActivity() {
@@ -19,7 +21,7 @@ class PrivacyActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         DecoratorNavigationUI.hideNavigationBar(this)
-
+        if (!checkerPrivacyAccepted(this)){binding.buttonAcceptPrivacy.visibility = View.VISIBLE}
         binding.buttonAcceptPrivacy.setOnClickListener {
             setAnimateClickButton(it, {
                 setPrivacyAccepted(this)
