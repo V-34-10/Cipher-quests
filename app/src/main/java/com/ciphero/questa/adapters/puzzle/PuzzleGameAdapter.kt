@@ -117,8 +117,7 @@ class PuzzleGameAdapter(
     }
 
     private fun isValidMove(clicked: Int, empty: Int, gridSize: Int): Boolean {
-        val rowDiff = abs((clicked / gridSize) - (empty / gridSize))
-        val colDiff = abs((clicked % gridSize) - (empty % gridSize))
-        return (rowDiff == 1 && colDiff == 0) || (rowDiff == 0 && colDiff == 1)
+        val diff = abs(clicked - empty)
+        return (diff == 1 && clicked / gridSize == empty / gridSize) || (diff == gridSize)
     }
 }
