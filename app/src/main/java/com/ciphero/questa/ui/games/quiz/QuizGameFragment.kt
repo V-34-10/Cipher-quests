@@ -14,10 +14,8 @@ import com.ciphero.questa.databinding.FragmentQuizGameBinding
 import com.ciphero.questa.model.CasinoQuizQuestions
 import com.ciphero.questa.model.Question
 import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame
-import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.settings.MusicSoundPlayer
-import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
-import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.BindingManager.controlButtonGames
 
 class QuizGameFragment : Fragment() {
     private var _binding: FragmentQuizGameBinding? = null
@@ -55,18 +53,13 @@ class QuizGameFragment : Fragment() {
         }
 
         answerButtons.forEach { it.setOnClickListener(answerClickListener) }
-
-        binding.btnNext.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            resetAnswerButtonBackgrounds()
-            binding.btnNext.isEnabled = false
-            binding.btnNext.visibility = View.GONE
-            showNextQuestion()
-        }
-        binding.btnBack.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            navigateToActivity(MenuActivity::class.java, requireActivity())
-        }
+        controlButtonGames(
+            binding,
+            requireContext(),
+            this,
+            requireActivity(),
+            resetAnswerButtonBackgrounds = { resetAnswerButtonBackgrounds() },
+            showNextQuestion = { showNextQuestion() })
     }
 
     private fun resetAnswerButtonBackgrounds() =

@@ -8,13 +8,10 @@ import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.adapters.puzzle.PuzzleMoveListener
 import com.ciphero.questa.databinding.FragmentPuzzleGameBinding
-import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.controller.GovernGamePuzzle
 import com.ciphero.questa.ui.games.puzzle.timer.TimeBarAnimator
-import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.settings.MusicSoundPlayer
-import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
-import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.BindingManager.controlButtonGames
 
 class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
     private var _binding: FragmentPuzzleGameBinding? = null
@@ -37,17 +34,13 @@ class PuzzleGameFragment : Fragment(), PuzzleMoveListener {
         super.onViewCreated(view, savedInstanceState)
         musicSet.apply { playSound(R.raw.music_puzzle, true) }
         gameGovern.startRound()
-
-        binding.btnPause.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            timer.stopTimer(binding)
-            startDialogPauseGamePuzzle(this)
-        }
-        binding.btnBack.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            navigateToActivity(MenuActivity::class.java, requireActivity())
-        }
-
+        controlButtonGames(
+            binding,
+            requireContext(),
+            this,
+            requireActivity(),
+            timer = timer
+        )
     }
 
     override fun onResume() {

@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ciphero.questa.R
 import com.ciphero.questa.databinding.FragmentFindPairGameBinding
-import com.ciphero.questa.ui.games.dialogs.DialogsBaseGame.startDialogPauseGameFindPair
 import com.ciphero.questa.ui.games.findpair.controller.ControllerFindPairGame
-import com.ciphero.questa.ui.menu.MenuActivity
 import com.ciphero.questa.ui.settings.MusicSoundPlayer
-import com.ciphero.questa.utils.AnimatorManager.startAnimateClickButton
-import com.ciphero.questa.utils.DecoratorNavigationUI.navigateToActivity
+import com.ciphero.questa.utils.BindingManager.controlButtonGames
 
 class FindPairGameFragment : Fragment() {
     private var _binding: FragmentFindPairGameBinding? = null
@@ -31,17 +28,13 @@ class FindPairGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         musicSet.apply { playSound(R.raw.music_find_pair, true) }
-        binding.btnPause.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            gameGovern.stopGame()
-            startDialogPauseGameFindPair(this, gameGovern)
-        }
-
-        binding.btnBack.setOnClickListener {
-            startAnimateClickButton(it, requireContext())
-            gameGovern.stopGame()
-            navigateToActivity(MenuActivity::class.java, requireActivity())
-        }
+        controlButtonGames(
+            binding,
+            requireContext(),
+            this,
+            requireActivity(),
+            gameGovern = gameGovern
+        )
     }
 
     override fun onResume() {
