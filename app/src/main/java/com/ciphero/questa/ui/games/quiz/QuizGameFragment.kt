@@ -33,6 +33,8 @@ class QuizGameFragment : Fragment() {
     private var correctAnswers = 0
     private var incorrectAnswers = 0
     private val totalQuestions = 10
+    private val askedQuestions = mutableSetOf<Question>()
+    private val availableQuestions = CasinoQuizQuestions.questions.toMutableList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +73,11 @@ class QuizGameFragment : Fragment() {
     private fun showNextQuestion() {
         if (questionCount < totalQuestions) {
             questionCount++
-            currentQuestion = CasinoQuizQuestions.questions.random()
+
+            currentQuestion = availableQuestions.random().also {
+                availableQuestions.remove(it)
+                askedQuestions.add(it)
+            }
             binding.textQuestion.text = currentQuestion?.text
 
             val answers = currentQuestion?.answers?.shuffled() ?: emptyList()
@@ -134,6 +140,9 @@ class QuizGameFragment : Fragment() {
         showNextQuestion()
         resetAnswerButtonBackgrounds()
         enableAnswerButtons()
+        askedQuestions.clear()
+        availableQuestions.addAll(CasinoQuizQuestions.questions)
+        availableQuestions.shuffle()
         musicSet.resume()
     }
 
