@@ -25,8 +25,8 @@ class PuzzleGameAdapter(
     private var fragment: PuzzleGameFragment
 ) : RecyclerView.Adapter<PuzzleGameAdapter.ViewHolder>() {
 
-    private var emptyPosition: Int = cardList.size - 1
     private val puzzleImageSetup = GeneratorPuzzleImage(context)
+    private var emptyPosition: Int = cardList.indexOfFirst { it.img == R.drawable.puzzle8 }
     private val levelConfig = puzzleImageSetup.gridConfig
     private val winListPuzzle: List<Int> = levelConfig.victoryListPuzzle
     private var timerStarted = false
